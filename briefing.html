@@ -787,30 +787,7 @@
         <div class="no-upsell-text">Não, eu já tenho domínio e hospedagem própria — enviarei os dados de acesso.</div>
       </div>
 
-      <div class="section-divider"></div>
-
-      <!-- RESUMO DO PEDIDO -->
-      <div class="summary-card">
-        <h3>📋 Resumo do Pedido</h3>
-        <div class="summary-row">
-          <span class="key">Landing Page Express</span>
-          <span class="val">R$ 297,00</span>
-        </div>
-        <div class="summary-row">
-          <span class="key">Entrega</span>
-          <span class="val" style="color:var(--orange)">3 dias úteis</span>
-        </div>
-        <div class="summary-row" id="upsellRow" style="display:none">
-          <span class="key">Domínio + Hospedagem</span>
-          <span class="val" style="color:var(--orange)">+ R$ 100,00/ano</span>
-        </div>
-        <div class="summary-total">
-          <span>Total</span>
-          <span class="total-val" id="totalVal">R$ 297,00</span>
-        </div>
-      </div>
-
-      <button class="btn-next" onclick="submitForm()" style="font-size:1.05rem;padding:20px;">
+      <button class="btn-next" onclick="submitForm()" style="font-size:1.05rem;padding:20px;margin-top:24px">
         🚀 Enviar Briefing e Decolar!
       </button>
       <button class="btn-back" onclick="prevStep()">← Voltar</button>
@@ -925,8 +902,6 @@
       document.getElementById('noUpsellCheck').textContent = val ? '' : '✓';
       document.getElementById('noUpsellCheck').style.background = val ? '' : 'var(--gray)';
       document.getElementById('noUpsellCheck').style.borderColor = val ? 'var(--border)' : 'var(--gray)';
-      document.getElementById('upsellRow').style.display = val ? 'flex' : 'none';
-      document.getElementById('totalVal').textContent = val ? 'R$ 397,00' : 'R$ 297,00';
     }
 
     // Init upsell state
@@ -951,8 +926,22 @@
       const waVendas   = document.getElementById('whatsappVendas').value || '';
       const insta      = document.getElementById('instagram').value || '';
       const obs        = document.getElementById('obs').value || '';
-      const hospedagem = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
-      const total      = upsellSelected ? 'R$ 397,00' : 'R$ 297,00';
+      const hospedagem = upsellSelected ? 'sim' : 'nao';
+
+      // Monta objeto do cliente para o painel
+      const clientData = {
+        nome, cliente, wa, waVendas, instagram: insta,
+        oQueFaz, diff1, diff2, diff3, oferta,
+        cidade: document.getElementById('cidade').value || '',
+        depoimentos: document.getElementById('depoimentos').value || '',
+        obs, hospedagem, cores: colorChoice, valor: '297'
+      };
+
+      // Gera link de importação automática para o painel
+      const importHash   = btoa(encodeURIComponent(JSON.stringify(clientData)));
+      const painelBase   = location.href.replace('briefing.html','painel.html');
+      const importLink   = `${painelBase}#${importHash}`;
+      const hospLabel    = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
 
       const msg = `🚀 *NOVO BRIEFING PAGEEXPRESS*\n\n`
         + `*Negócio:* ${nome}\n`
@@ -963,9 +952,9 @@
         + `*Oferta:* ${oferta}\n`
         + `*WhatsApp vendas:* ${waVendas}\n`
         + `*Instagram:* ${insta}\n\n`
-        + `*Hospedagem:* ${hospedagem}\n`
-        + `*Total:* ${total}\n\n`
-        + `*Obs:* ${obs}`;
+        + `*Hospedagem:* ${hospLabel}\n`
+        + `*Obs:* ${obs}\n\n`
+        + `📥 *Importar no painel:*\n${importLink}`;
 
       const waLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
 

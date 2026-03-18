@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin | PageExpress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #000000;
+      --bg2:     #0d0d0d;
+      --bg3:     #141414;
+      --bg4:     #1a1a1a;
+      --border:  #222222;
+      --border2: #2a2a2a;
+      --orange:  #FF8C00;
+      --orange-d:#cc7000;
+      --orange-g:rgba(255,140,0,0.14);
+      --white:   #ffffff;
+      --gray:    #888888;
+      --light:   #cccccc;
+      --green:   #22c55e;
+      --blue:    #3b82f6;
+      --yellow:  #f59e0b;
+      --red:     #ef4444;
+      --purple:  #a855f7;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ═══ LOGIN ═══ */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-box {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%; max-width: 420px;
+      text-align: center;
+    }
+    .login-logo { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
+    .login-logo span { color: var(--orange); }
+    .login-sub { font-size: 0.85rem; color: var(--gray); margin-bottom: 32px; }
+    .login-box input[type="password"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 14px 18px;
+      text-align: center;
+      letter-spacing: 4px;
+      outline: none;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .login-box input[type="password"]:focus { border-color: var(--orange); }
+    .login-box input[type="password"]::placeholder { letter-spacing: 0; }
+    .btn-login {
+      width: 100%;
+      background: var(--orange);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      padding: 15px; border: none; border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(255,140,0,0.3);
+      transition: opacity 0.2s;
+    }
+    .btn-login:hover { opacity: 0.9; }
+    .login-err { color: var(--red); font-size: 0.82rem; margin-top: 12px; display: none; }
+
+    /* ═══ MAIN APP ═══ */
+    #app { display: none; }
+
+    /* SIDEBAR */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 50;
+    }
+    .sidebar-logo {
+      font-size: 1.1rem; font-weight: 900;
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .sidebar-logo span { color: var(--orange); }
+    .sidebar-logo small { display: block; font-size: 0.65rem; color: var(--gray); font-weight: 400; margin-top: 2px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 20px;
+      font-size: 0.87rem; font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      border-radius: 0;
+      transition: color 0.2s, background 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .nav-item:hover { color: var(--white); background: var(--bg3); }
+    .nav-item.active { color: var(--orange); background: var(--orange-g); border-left-color: var(--orange); }
+    .nav-icon { width: 18px; text-align: center; font-size: 1rem; }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-logout {
+      width: 100%;
+      background: transparent;
+      color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 10px; border: 1px solid var(--border);
+      border-radius: 10px; cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-logout:hover { color: var(--red); border-color: var(--red); }
+
+    /* MAIN CONTENT */
+    .main { margin-left: 240px; flex: 1; padding: 32px; }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+    }
+    .topbar-title { font-size: 1.5rem; font-weight: 800; }
+    .topbar-actions { display: flex; gap: 10px; }
+    .btn-primary {
+      background: var(--orange); color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800; font-size: 0.85rem;
+      padding: 10px 18px; border: none; border-radius: 10px;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline {
+      background: transparent; color: var(--light);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600; font-size: 0.85rem;
+      padding: 10px 18px; border: 1.5px solid var(--border);
+      border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gray); color: var(--white); }
+
+    /* STATS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 14px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 20px 22px;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--gray); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .stat-value { font-size: 2rem; font-weight: 900; }
+    .stat-sub { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+    /* SEARCH & FILTER */
+    .filter-row {
+      display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap input {
+      width: 100%;
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.88rem;
+      padding: 10px 16px 10px 38px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { border-color: var(--orange); }
+    .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--gray); }
+    .filter-btn {
+      background: var(--bg3); color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 10px 16px; border: 1.5px solid var(--border);
+      border-radius: 10px; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--orange); color: var(--orange); background: var(--orange-g); }
+
+    /* CLIENT GRID */
+    .clients-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+    }
+    .client-card {
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 18px; padding: 22px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .client-card:hover { border-color: var(--orange); box-shadow: 0 0 24px rgba(255,140,0,0.08); }
+    .card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 14px;
+    }
+    .card-avatar {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--orange); color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 900; flex-shrink: 0;
+    }
+    .status-badge {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+    }
+    .s-novo      { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+    .s-design    { background: rgba(245,158,11,0.15); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+    .s-revisao   { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+    .s-entregue  { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .s-pausado   { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+    .card-name { font-size: 1rem; font-weight: 800; margin-bottom: 3px; }
+    .card-owner { font-size: 0.8rem; color: var(--gray); margin-bottom: 14px; }
+    .card-divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag {
+      font-size: 0.72rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 999px; background: var(--bg4);
+      border: 1px solid var(--border2); color: var(--light);
+    }
+    .tag.upsell { background: rgba(255,140,0,0.1); border-color: rgba(255,140,0,0.3); color: var(--orange); }
+
+    .card-info { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .info-row { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--light); }
+    .info-icon { width: 16px; color: var(--gray); text-align: center; flex-shrink: 0; }
+
+    .card-footer { display: flex; gap: 8px; }
+    .card-btn {
+      flex: 1; padding: 9px 6px; border-radius: 9px;
+      font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; text-align: center; border: none;
+      transition: opacity 0.2s;
+    }
+    .card-btn:hover { opacity: 0.8; }
+    .cb-view { background: var(--orange); color: #000; }
+    .cb-wa   { background: #25d366; color: #000; }
+    .cb-del  { background: var(--bg4); color: var(--gray); border: 1px solid var(--border2); }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center; padding: 80px 24px;
+      color: var(--gray); grid-column: 1 / -1;
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--light); margin-bottom: 8px; }
+    .empty-sub { font-size: 0.88rem; line-height: 1.6; }
+
+    /* ═══ MODAL DETALHES ═══ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none; align-items: center; justify-content: center;
+      z-index: 200; padding: 24px;
+      backdrop-filter: blur(6px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 24px; width: 100%; max-width: 680px;
+      max-height: 90vh; overflow-y: auto;
+      padding: 32px;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform: translateY(20px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .modal-header {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 24px;
+    }
+    .modal-title { font-size: 1.3rem; font-weight: 900; }
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--gray); font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--white); }
+    .modal-section { margin-bottom: 24px; }
+    .modal-section-title {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange); text-transform: uppercase;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-row {
+      display: flex; gap: 12px; margin-bottom: 10px;
+      font-size: 0.87rem;
+    }
+    .detail-key { color: var(--gray); min-width: 140px; flex-shrink: 0; }
+    .detail-val { color: var(--white); font-weight: 500; line-height: 1.5; }
+    .diff-chips { display: flex; flex-direction: column; gap: 6px; }
+    .diff-chip {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 14px;
+      font-size: 0.83rem; color: var(--light);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .diff-chip .dn { color: var(--orange); font-weight: 800; font-size: 0.75rem; }
+
+    /* STATUS SELECT */
+    .status-select-wrap { margin-bottom: 20px; }
+    .status-select-wrap label { display: block; font-size: 0.78rem; color: var(--gray); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    select.status-sel {
+      background: var(--bg3); border: 1.5px solid var(--border);
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 10px 16px; border-radius: 10px;
+      outline: none; cursor: pointer; width: 100%;
+    }
+    select.status-sel:focus { border-color: var(--orange); }
+
+    .notes-area {
+      width: 100%;
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.88rem;
+      padding: 12px 16px; resize: vertical; min-height: 90px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .notes-area:focus { border-color: var(--orange); }
+    .btn-save-modal {
+      width: 100%; background: var(--orange); color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800; font-size: 0.95rem;
+      padding: 14px; border: none; border-radius: 12px;
+      cursor: pointer; margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-save-modal:hover { opacity: 0.85; }
+
+    /* ═══ MODAL ADD MANUAL ═══ */
+    .form-field { margin-bottom: 18px; }
+    .form-field label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 7px; }
+    .form-field input, .form-field textarea, .form-field select {
+      width: 100%;
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      padding: 12px 16px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus, .form-field textarea:focus { border-color: var(--orange); }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--green); color: #000;
+      font-weight: 700; font-size: 0.88rem;
+      padding: 14px 22px; border-radius: 14px;
+      z-index: 999; display: none;
+      box-shadow: 0 8px 32px rgba(34,197,94,0.4);
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { opacity:0; transform: translateX(20px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px 16px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .clients-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ LOGIN ══════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Page<span>Express</span></div>
+    <div class="login-sub">Painel Administrativo · Acesso Restrito</div>
+    <input type="password" id="pwdInput" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')doLogin()" autofocus />
+    <button class="btn-login" onclick="doLogin()">🔐 Entrar no Painel</button>
+    <div class="login-err" id="loginErr">❌ Senha incorreta. Tente novamente.</div>
+  </div>
+</div>
+
+<!-- ══════════════════ APP ══════════════════ -->
+<div id="app">
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        Page<span>Express</span>
+        <small>Painel Admin</small>
+      </div>
+      <nav>
+        <div class="nav-item active" onclick="setView('clientes')">
+          <span class="nav-icon">👥</span> Clientes
+        </div>
+        <div class="nav-item" onclick="setView('stats')">
+          <span class="nav-icon">📊</span> Relatório
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="logout()">↩ Sair da conta</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- VIEW: CLIENTES -->
+      <div id="viewClientes">
+        <div class="topbar">
+          <div class="topbar-title">Clientes 👥</div>
+          <div class="topbar-actions">
+            <button class="btn-outline" onclick="openImport()">📥 Importar JSON</button>
+            <button class="btn-primary" onclick="openAddModal()">+ Novo Cliente</button>
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total</div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-sub">clientes cadastrados</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Em produção</div>
+            <div class="stat-value" style="color:var(--yellow)" id="statProd">0</div>
+            <div class="stat-sub">design + revisão</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Entregues</div>
+            <div class="stat-value" style="color:var(--green)" id="statDone">0</div>
+            <div class="stat-sub">projetos concluídos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Receita</div>
+            <div class="stat-value" style="color:var(--orange)" id="statRevenue">R$0</div>
+            <div class="stat-sub">faturamento total</div>
+          </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filter-row">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Buscar por nome, negócio ou WhatsApp…" oninput="renderClients()" />
+          </div>
+          <button class="filter-btn active" onclick="setFilter('todos', this)">Todos</button>
+          <button class="filter-btn" onclick="setFilter('novo', this)">Novo</button>
+          <button class="filter-btn" onclick="setFilter('design', this)">Design</button>
+          <button class="filter-btn" onclick="setFilter('revisao', this)">Revisão</button>
+          <button class="filter-btn" onclick="setFilter('entregue', this)">Entregues</button>
+        </div>
+
+        <!-- GRID CLIENTES -->
+        <div class="clients-grid" id="clientsGrid"></div>
+      </div>
+
+      <!-- VIEW: RELATÓRIO -->
+      <div id="viewStats" style="display:none">
+        <div class="topbar">
+          <div class="topbar-title">Relatório 📊</div>
+        </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);max-width:600px">
+          <div class="stat-card">
+            <div class="stat-label">Com Hospedagem</div>
+            <div class="stat-value" style="color:var(--orange)" id="rHosp">0</div>
+            <div class="stat-sub">upsell ativado</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Sem Hospedagem</div>
+            <div class="stat-value" id="rSemHosp">0</div>
+            <div class="stat-sub">hospedagem própria</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Ticket Médio</div>
+            <div class="stat-value" style="color:var(--green)" id="rTicket">R$0</div>
+            <div class="stat-sub">por cliente</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Receita Total</div>
+            <div class="stat-value" style="color:var(--orange)" id="rTotal">R$0</div>
+            <div class="stat-sub">acumulado</div>
+          </div>
+        </div>
+        <div style="margin-top:28px">
+          <div style="font-size:0.75rem;color:var(--gray);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">Status dos Projetos</div>
+          <div id="statusBars"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL DETALHES ══════════════════ -->
+<div class="modal-overlay" id="modalDetail">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="detailTitle">Cliente</div>
+      <button class="modal-close" onclick="closeModal('modalDetail')">✕</button>
+    </div>
+
+    <!-- STATUS -->
+    <div class="status-select-wrap">
+      <label>Status do Projeto</label>
+      <select class="status-sel" id="detailStatus" onchange="saveDetailStatus()">
+        <option value="novo">🔵 Novo Briefing</option>
+        <option value="design">🟡 Em Design</option>
+        <option value="revisao">🟣 Em Revisão</option>
+        <option value="entregue">🟢 Entregue</option>
+        <option value="pausado">🔴 Pausado</option>
+      </select>
+    </div>
+
+    <div id="detailBody"></div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">📝 Anotações Internas</div>
+      <textarea class="notes-area" id="detailNotes" placeholder="Anotações, links, observações do projeto…"></textarea>
+      <button class="btn-save-modal" onclick="saveNotes()">💾 Salvar Anotações</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL ADICIONAR ══════════════════ -->
+<div class="modal-overlay" id="modalAdd">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">➕ Novo Cliente</div>
+      <button class="modal-close" onclick="closeModal('modalAdd')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Nome do Negócio *</label>
+        <input type="text" id="addNome" placeholder="Ex: Clínica Bella Pele" />
+      </div>
+      <div class="form-field">
+        <label>Nome do Cliente *</label>
+        <input type="text" id="addCliente" placeholder="Ex: João Silva" />
+      </div>
+      <div class="form-field">
+        <label>WhatsApp (DDD)</label>
+        <input type="tel" id="addWa" placeholder="(34) 99999-9999" />
+      </div>
+      <div class="form-field">
+        <label>Instagram</label>
+        <input type="text" id="addInsta" placeholder="@perfil" />
+      </div>
+    </div>
+    <div class="form-field">
+      <label>O que faz</label>
+      <textarea id="addOQueFaz" placeholder="Descreva o serviço…"></textarea>
+    </div>
+    <div class="form-field">
+      <label>Oferta Principal</label>
+      <input type="text" id="addOferta" placeholder="Ex: Orçamento Grátis" />
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Hospedagem?</label>
+        <select id="addHosp">
+          <option value="sim">✅ Sim (+R$100/ano)</option>
+          <option value="nao">❌ Não (tem própria)</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Valor Pago</label>
+        <input type="text" id="addValor" placeholder="297" value="297" />
+      </div>
+    </div>
+    <button class="btn-save-modal" onclick="addClientManual()">✅ Cadastrar Cliente</button>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL IMPORTAR JSON ══════════════════ -->
+<div class="modal-overlay" id="modalImport">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📥 Importar Briefing</div>
+      <button class="modal-close" onclick="closeModal('modalImport')">✕</button>
+    </div>
+    <p style="color:var(--gray);font-size:0.87rem;margin-bottom:16px;line-height:1.6">
+      Cole abaixo o JSON enviado automaticamente pelo formulário de briefing. O link de importação também chega pelo WhatsApp — basta clicar nele.
+    </p>
+    <div class="form-field">
+      <label>JSON do Briefing</label>
+      <textarea id="importJson" style="min-height:160px;font-family:monospace;font-size:0.78rem" placeholder='{"nome":"Meu Negócio","cliente":"João","wa":"349999...",...}'></textarea>
+    </div>
+    <button class="btn-save-modal" onclick="importJson()">📥 Importar Dados</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Salvo com sucesso!</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  DATA LAYER
+// ═══════════════════════════════════════════════════
+const STORAGE_KEY = 'pageexpress_clients_v2';
+const PASSWORD    = 'pageexpress2025';
+let clients = [];
+let activeFilter = 'todos';
+let openClientId = null;
+
+function load()  { try { clients = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ clients=[]; } }
+function save()  { localStorage.setItem(STORAGE_KEY, JSON.stringify(clients)); }
+function uid()   { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+// ═══════════════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════════════
+function doLogin() {
+  const pwd = document.getElementById('pwdInput').value;
+  if (pwd === PASSWORD) {
+    sessionStorage.setItem('pe_auth','1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+  }
+}
+function logout() {
+  sessionStorage.removeItem('pe_auth');
+  location.reload();
+}
+if (sessionStorage.getItem('pe_auth') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.addEventListener('DOMContentLoaded', init);
+}
+
+// ═══════════════════════════════════════════════════
+//  INIT — checa URL para import automático
+// ═══════════════════════════════════════════════════
+function init() {
+  load();
+
+  // Import automático via URL hash
+  const hash = location.hash.slice(1);
+  if (hash) {
+    try {
+      const data = JSON.parse(decodeURIComponent(atob(hash)));
+      if (data && data.nome) {
+        importClientData(data);
+        history.replaceState(null, '', location.pathname);
+        showToast('🎉 Novo briefing importado automaticamente!');
+      }
+    } catch(e) {}
+  }
+
+  renderClients();
+  updateStats();
+}
+
+// ═══════════════════════════════════════════════════
+//  STATUS
+// ═══════════════════════════════════════════════════
+const STATUS_LABELS = { novo:'Novo', design:'Em Design', revisao:'Em Revisão', entregue:'Entregue', pausado:'Pausado' };
+const STATUS_CLASS  = { novo:'s-novo', design:'s-design', revisao:'s-revisao', entregue:'s-entregue', pausado:'s-pausado' };
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderClients();
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER CLIENTS
+// ═══════════════════════════════════════════════════
+function renderClients() {
+  const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  let list = clients.filter(c => {
+    const matchFilter = activeFilter === 'todos' || c.status === activeFilter;
+    const matchSearch = !q
+      || (c.nome||'').toLowerCase().includes(q)
+      || (c.cliente||'').toLowerCase().includes(q)
+      || (c.wa||'').toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  }).sort((a,b) => (b.createdAt||0)-(a.createdAt||0));
+
+  const grid = document.getElementById('clientsGrid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📂</div>
+      <div class="empty-title">Nenhum cliente encontrado</div>
+      <div class="empty-sub">Clique em "+ Novo Cliente" para cadastrar manualmente<br>ou use o formulário de briefing para importar automaticamente.</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = list.map(c => cardHTML(c)).join('');
+  updateStats();
+}
+
+function cardHTML(c) {
+  const initials = (c.nome||'?').slice(0,2).toUpperCase();
+  const status = c.status || 'novo';
+  const waLink = c.waVendas
+    ? `https://wa.me/55${c.waVendas.replace(/\D/g,'')}?text=Olá%20${encodeURIComponent(c.cliente||'')}!%20Aqui%20é%20a%20PageExpress.`
+    : '#';
+  const date = c.createdAt ? new Date(c.createdAt).toLocaleDateString('pt-BR') : '—';
+  return `<div class="client-card" onclick="openDetail('${c.id}')">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="card-avatar">${initials}</div>
+        <div>
+          <div class="card-name">${c.nome||'Sem nome'}</div>
+          <div class="card-owner">${c.cliente||''}${c.waVendas ? ' · '+c.waVendas : ''}</div>
+        </div>
+      </div>
+      <div class="status-badge ${STATUS_CLASS[status]}">${STATUS_LABELS[status]}</div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-tags">
+      ${c.hospedagem==='sim'?'<span class="tag upsell">🌐 Hospedagem</span>':''}
+      ${c.oferta?`<span class="tag">🎯 ${c.oferta.slice(0,28)}</span>`:''}
+      <span class="tag">📅 ${date}</span>
+      <span class="tag">${c.valor?'R$ '+c.valor:'R$ 297'}</span>
+    </div>
+    ${c.oQueFaz ? `<div class="info-row" style="font-size:0.8rem;color:var(--gray);margin-bottom:12px;line-height:1.5">${c.oQueFaz.slice(0,90)}${c.oQueFaz.length>90?'…':''}</div>` : ''}
+    <div class="card-footer" onclick="event.stopPropagation()">
+      <button class="card-btn cb-view" onclick="openDetail('${c.id}')">👁 Ver Detalhes</button>
+      <button class="card-btn cb-wa" onclick="window.open('${waLink}','_blank')">💬 WhatsApp</button>
+      <button class="card-btn cb-del" onclick="deleteClient('${c.id}')">🗑</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════════
+function updateStats() {
+  const total  = clients.length;
+  const prod   = clients.filter(c => c.status==='design'||c.status==='revisao').length;
+  const done   = clients.filter(c => c.status==='entregue').length;
+  const revenue= clients.reduce((s,c) => s + (parseFloat(c.valor)||297) + (c.hospedagem==='sim'?100:0), 0);
+  document.getElementById('statTotal').textContent   = total;
+  document.getElementById('statProd').textContent    = prod;
+  document.getElementById('statDone').textContent    = done;
+  document.getElementById('statRevenue').textContent = 'R$'+revenue.toLocaleString('pt-BR');
+
+  // relatório
+  const hosp    = clients.filter(c=>c.hospedagem==='sim').length;
+  const semHosp = clients.filter(c=>c.hospedagem!=='sim').length;
+  const ticket  = total ? Math.round(revenue/total) : 0;
+  const set = (id,v) => { const el = document.getElementById(id); if(el) el.textContent=v; };
+  set('rHosp', hosp); set('rSemHosp', semHosp);
+  set('rTicket','R$'+ticket.toLocaleString('pt-BR'));
+  set('rTotal','R$'+revenue.toLocaleString('pt-BR'));
+
+  const bars = document.getElementById('statusBars');
+  if (bars) {
+    const items = [
+      {label:'Novo',    key:'novo',     color:'var(--blue)'},
+      {label:'Design',  key:'design',   color:'var(--yellow)'},
+      {label:'Revisão', key:'revisao',  color:'var(--purple)'},
+      {label:'Entregue',key:'entregue', color:'var(--green)'},
+      {label:'Pausado', key:'pausado',  color:'var(--red)'},
+    ];
+    bars.innerHTML = items.map(i => {
+      const n   = clients.filter(c=>(c.status||'novo')===i.key).length;
+      const pct = total ? Math.round(n/total*100) : 0;
+      return `<div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px">
+          <span style="color:var(--light);font-weight:600">${i.label}</span>
+          <span style="color:var(--gray)">${n} cliente${n!==1?'s':''} · ${pct}%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:999px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${i.color};border-radius:999px;transition:width 0.6s ease"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  DETAIL MODAL
+// ═══════════════════════════════════════════════════
+function openDetail(id) {
+  openClientId = id;
+  const c = clients.find(x=>x.id===id);
+  if (!c) return;
+  document.getElementById('detailTitle').textContent = c.nome || 'Cliente';
+  document.getElementById('detailStatus').value = c.status || 'novo';
+  document.getElementById('detailNotes').value  = c.notes  || '';
+
+  const diffs = [c.diff1,c.diff2,c.diff3].filter(Boolean);
+  document.getElementById('detailBody').innerHTML = `
+    <div class="modal-section">
+      <div class="modal-section-title">🏢 Identidade</div>
+      ${dr('Negócio', c.nome)} ${dr('Cliente', c.cliente)} ${dr('WhatsApp', c.wa)} ${dr('Instagram', c.instagram||'—')}
+      ${dr('Cores', c.cores==='sugestaoPage'?'Sugestão PageExpress':'Manter marca')}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">💼 Conteúdo</div>
+      ${dr('O que faz', c.oQueFaz)}
+      ${dr('Oferta', c.oferta)}
+      ${dr('Cidade/Atuação', c.cidade||'—')}
+      ${diffs.length ? `<div style="margin-top:12px"><div style="font-size:0.8rem;color:var(--gray);margin-bottom:8px">Diferenciais</div><div class="diff-chips">${diffs.map((d,i)=>`<div class="diff-chip"><span class="dn">${i+1}</span>${d}</div>`).join('')}</div></div>` : ''}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">📲 Conversão</div>
+      ${dr('WhatsApp Vendas', c.waVendas||'—')} ${dr('Depoimentos', c.depoimentos||'—')} ${dr('Obs do cliente', c.obs||'—')}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">💰 Financeiro</div>
+      ${dr('LP Express', 'R$ '+(c.valor||'297'))}
+      ${dr('Hospedagem/Domínio', c.hospedagem==='sim'?'✅ Sim · +R$ 100/ano':'❌ Não incluso')}
+      ${dr('Total Estimado', 'R$ '+(parseFloat(c.valor||297)+(c.hospedagem==='sim'?100:0)).toLocaleString('pt-BR'))}
+      ${dr('Recebido em', c.createdAt?new Date(c.createdAt).toLocaleString('pt-BR'):'—')}
+    </div>`;
+  document.getElementById('modalDetail').classList.add('open');
+}
+function dr(k,v) {
+  return `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v||'—'}</span></div>`;
+}
+function saveDetailStatus() {
+  const c = clients.find(x=>x.id===openClientId);
+  if (c) { c.status = document.getElementById('detailStatus').value; save(); renderClients(); }
+}
+function saveNotes() {
+  const c = clients.find(x=>x.id===openClientId);
+  if (c) { c.notes = document.getElementById('detailNotes').value; save(); showToast('💾 Anotações salvas!'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  ADD MANUAL
+// ═══════════════════════════════════════════════════
+function openAddModal() { document.getElementById('modalAdd').classList.add('open'); }
+function addClientManual() {
+  const nome = document.getElementById('addNome').value.trim();
+  if (!nome) { alert('Informe o nome do negócio.'); return; }
+  const c = {
+    id: uid(), createdAt: Date.now(), status: 'novo',
+    nome, cliente: document.getElementById('addCliente').value.trim(),
+    wa:   document.getElementById('addWa').value.trim(),
+    waVendas: document.getElementById('addWa').value.trim(),
+    instagram: document.getElementById('addInsta').value.trim(),
+    oQueFaz: document.getElementById('addOQueFaz').value.trim(),
+    oferta: document.getElementById('addOferta').value.trim(),
+    hospedagem: document.getElementById('addHosp').value,
+    valor: document.getElementById('addValor').value.trim() || '297',
+  };
+  clients.push(c);
+  save(); closeModal('modalAdd'); renderClients(); updateStats();
+  showToast('✅ Cliente cadastrado!');
+  ['addNome','addCliente','addWa','addInsta','addOQueFaz','addOferta'].forEach(id => document.getElementById(id).value='');
+}
+
+// ═══════════════════════════════════════════════════
+//  IMPORT JSON
+// ═══════════════════════════════════════════════════
+function openImport() { document.getElementById('modalImport').classList.add('open'); }
+function importJson() {
+  try {
+    const raw = document.getElementById('importJson').value.trim();
+    const data = JSON.parse(raw);
+    importClientData(data);
+    closeModal('modalImport');
+    document.getElementById('importJson').value = '';
+    showToast('🎉 Briefing importado com sucesso!');
+  } catch(e) { alert('JSON inválido. Verifique o texto copiado.'); }
+}
+function importClientData(data) {
+  const exists = clients.find(c =>
+    c.wa === data.wa && c.nome === data.nome
+  );
+  if (exists) { showToast('⚠️ Cliente já cadastrado.'); return; }
+  const c = { id: uid(), createdAt: Date.now(), status: 'novo', notes: '', ...data };
+  clients.push(c);
+  save(); renderClients(); updateStats();
+}
+
+// ═══════════════════════════════════════════════════
+//  DELETE
+// ═══════════════════════════════════════════════════
+function deleteClient(id) {
+  if (!confirm('Remover este cliente do painel?')) return;
+  clients = clients.filter(c => c.id !== id);
+  save(); renderClients(); updateStats();
+  showToast('🗑 Cliente removido.');
+}
+
+// ═══════════════════════════════════════════════════
+//  VIEWS & MODALS
+// ═══════════════════════════════════════════════════
+function setView(v) {
+  document.getElementById('viewClientes').style.display = v==='clientes'?'block':'none';
+  document.getElementById('viewStats').style.display    = v==='stats'?'block':'none';
+  document.querySelectorAll('.nav-item').forEach((el,i) => {
+    el.classList.toggle('active', (i===0&&v==='clientes')||(i===1&&v==='stats'));
+  });
+  if (v==='stats') updateStats();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target===m) m.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, color='var(--green)') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color;
+  t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+</script>
+</body>
+</html>
