@@ -453,6 +453,7 @@
         <div class="topbar">
           <div class="topbar-title">Clientes 👥</div>
           <div class="topbar-actions">
+            <button class="btn-outline" onclick="loadFromFirebase()">🔄 Atualizar</button>
             <button class="btn-outline" onclick="openImport()">📥 Importar JSON</button>
             <button class="btn-primary" onclick="openAddModal()">+ Novo Cliente</button>
           </div>
@@ -638,6 +639,8 @@
 <div class="toast" id="toast">✅ Salvo com sucesso!</div>
 
 <script>
+const FIREBASE_URL = 'COLE_SUA_URL_FIREBASE_AQUI';
+
 // ═══════════════════════════════════════════════════
 //  DATA LAYER
 // ═══════════════════════════════════════════════════
@@ -698,6 +701,29 @@ function init() {
 
   renderClients();
   updateStats();
+  loadFromFirebase();
+}
+
+// ═══════════════════════════════════════════════════
+//  FIREBASE
+// ═══════════════════════════════════════════════════
+function loadFromFirebase() {
+  if (FIREBASE_URL === 'COLE_SUA_URL_FIREBASE_AQUI') return;
+  fetch(FIREBASE_URL + '/clientes.json')
+    .then(r => r.json())
+    .then(data => {
+      if (!data) return;
+      const firebaseClients = Object.entries(data).map(([fbId, c]) => ({...c, fbId}));
+      // Merge com localStorage sem duplicar
+      firebaseClients.forEach(fc => {
+        const exists = clients.find(c => c.wa === fc.wa && c.nome === fc.nome && c.createdAt === fc.createdAt);
+        if (!exists) clients.push({ id: fc.fbId || uid(), ...fc });
+      });
+      save();
+      renderClients();
+      updateStats();
+    })
+    .catch(err => console.warn('Firebase load:', err));
 }
 
 // ═══════════════════════════════════════════════════

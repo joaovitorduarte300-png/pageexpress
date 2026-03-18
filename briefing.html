@@ -811,6 +811,8 @@
   </div><!-- /form-wrapper -->
 
   <script>
+    const FIREBASE_URL = 'COLE_SUA_URL_FIREBASE_AQUI';
+
     let currentStep = 0;
     const totalSteps = 5;
     let upsellSelected = true;
@@ -908,6 +910,15 @@
         depoimentos: document.getElementById('depoimentos').value || '',
         obs, hospedagem, cores: colorChoice, valor: '297'
       };
+
+      // Salva no Firebase
+      if (FIREBASE_URL !== 'COLE_SUA_URL_FIREBASE_AQUI') {
+        fetch(FIREBASE_URL + '/clientes.json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...clientData, createdAt: Date.now(), status: 'novo' })
+        }).catch(err => console.warn('Firebase:', err));
+      }
 
       // Gera link de importação automática para o painel
       const importHash   = btoa(encodeURIComponent(JSON.stringify(clientData)));
