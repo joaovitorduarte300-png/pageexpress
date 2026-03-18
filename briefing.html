@@ -915,7 +915,7 @@
       const importLink   = `${painelBase}#${importHash}`;
       const hospLabel    = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
 
-      const msg = `Briefing respondido`;
+      const msg = `Briefing respondido 📥 ${importLink}`;
       document.getElementById('waBtnSucesso').href = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
 
       currentStep = 5;
