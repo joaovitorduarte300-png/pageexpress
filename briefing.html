@@ -915,25 +915,11 @@
       const importLink   = `${painelBase}#${importHash}`;
       const hospLabel    = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
 
-      const msg = `🚀 *NOVO BRIEFING PAGEEXPRESS*\n\n`
-        + `*Negócio:* ${nome}\n`
-        + `*Cliente:* ${cliente}\n`
-        + `*WhatsApp:* ${wa}\n\n`
-        + `*O que faz:* ${oQueFaz}\n\n`
-        + `*Diferenciais:*\n1. ${diff1}\n2. ${diff2}\n3. ${diff3}\n\n`
-        + `*Oferta:* ${oferta}\n`
-        + `*WhatsApp vendas:* ${waVendas}\n`
-        + `*Instagram:* ${insta}\n\n`
-        + `*Hospedagem:* ${hospLabel}\n`
-        + `*Obs:* ${obs}\n\n`
-        + `📥 *Importar no painel:*\n${importLink}`;
+      const msg = `Briefing respondido`;
 
-      // Link do botão de sucesso — mensagem simples do cliente
-      const msgCliente = `Briefing preenchido! Podem acessar direto pelo painel assim que chegar a mensagem para vocês. 🚀`;
-      const waBtnLink  = `https://wa.me/5534984341665?text=${encodeURIComponent(msgCliente)}`;
+      const waBtnLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
       document.getElementById('waBtnSucesso').href = waBtnLink;
 
-      // Disparo automático para o admin com dados completos + link do painel
       const waLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
 
       currentStep = 5;
