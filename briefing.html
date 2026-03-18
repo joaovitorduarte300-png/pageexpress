@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briefing do Cliente | PageExpress</title>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1420330315884845');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1420330315884845&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000000;
+      --bg2: #0d0d0d;
+      --bg3: #141414;
+      --border: #222222;
+      --orange: #FF8C00;
+      --orange-dark: #cc7000;
+      --orange-glow: rgba(255,140,0,0.18);
+      --white: #ffffff;
+      --gray: #999999;
+      --light: #cccccc;
+      --success: #22c55e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--orange); }
+    .badge-header {
+      background: var(--orange-glow);
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 680px;
+      padding: 24px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .progress-info span:last-child { color: var(--orange); font-weight: 600; }
+    .progress-bar-bg {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange-dark), var(--orange));
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── FORM WRAPPER ── */
+    .form-wrapper {
+      width: 100%;
+      max-width: 680px;
+      padding: 32px 24px 80px;
+    }
+
+    /* ── STEPS ── */
+    .step { display: none; animation: fadeIn 0.4s ease; }
+    .step.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── WELCOME SCREEN ── */
+    .welcome-icon {
+      width: 72px; height: 72px;
+      background: var(--orange-glow);
+      border: 2px solid var(--orange);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 28px;
+    }
+    .step-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: var(--orange-glow);
+      border: 1px solid var(--orange);
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .step h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .step h1 span { color: var(--orange); }
+    .step h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .step p {
+      color: var(--light);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* ── TIMER STRIP ── */
+    .timer-strip {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .timer-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .timer-text { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+    .timer-text strong { color: var(--orange); }
+
+    /* ── FIELDS ── */
+    .field-group { margin-bottom: 28px; }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    label .required { color: var(--orange); margin-left: 3px; }
+    .field-hint {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-glow);
+    }
+    textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+    select option { background: #111; color: var(--white); }
+
+    /* ── UPLOAD ── */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-area:hover {
+      border-color: var(--orange);
+      background: var(--orange-glow);
+    }
+    .upload-area input[type="file"] {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0; cursor: pointer;
+      padding: 0; border: none; background: none;
+    }
+    .upload-icon { font-size: 2rem; margin-bottom: 10px; }
+    .upload-label { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+    .upload-sub { font-size: 0.78rem; color: var(--gray); margin-top: 4px; }
+    .upload-area.has-file { border-color: var(--success); background: rgba(34,197,94,0.06); }
+    .upload-area.has-file .upload-icon::after { content: ' ✅'; }
+
+    /* ── RADIO COLORS ── */
+    .color-options { display: flex; gap: 12px; flex-wrap: wrap; }
+    .color-option {
+      flex: 1; min-width: 160px;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .color-option input[type="radio"] { display: none; }
+    .color-option.selected {
+      border-color: var(--orange);
+      background: var(--orange-glow);
+    }
+    .color-dot { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
+    .color-option-text { font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
+
+    /* ── DIFFERENTIALS ── */
+    .diff-list { display: flex; flex-direction: column; gap: 10px; }
+    .diff-item {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+    .diff-num {
+      width: 28px; height: 28px;
+      background: var(--orange);
+      color: #000;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .diff-item input[type="text"] {
+      border: none; background: transparent;
+      padding: 0; font-size: 0.9rem;
+      box-shadow: none !important;
+    }
+
+    /* ── UPSELL CARD ── */
+    .upsell-card {
+      background: var(--bg3);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .upsell-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange-dark), var(--orange));
+    }
+    .upsell-card.selected {
+      border-color: var(--orange);
+      background: rgba(255,140,0,0.04);
+    }
+    .upsell-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+      margin-bottom: 16px;
+    }
+    .upsell-title { font-size: 1.1rem; font-weight: 800; line-height: 1.3; }
+    .upsell-price {
+      background: var(--orange);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.9rem;
+      padding: 6px 14px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .upsell-desc {
+      font-size: 0.85rem;
+      color: var(--light);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .upsell-items { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .upsell-items li {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; color: var(--light);
+    }
+    .upsell-items li::before {
+      content: '●'; color: var(--orange); font-size: 0.5rem; flex-shrink: 0;
+    }
+    .upsell-checkbox-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 20px; padding-top: 18px;
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .custom-checkbox {
+      width: 22px; height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+    }
+    .upsell-card.selected .custom-checkbox {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #000;
+    }
+    .checkbox-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    .checkbox-label span { color: var(--orange); }
+
+    .no-upsell {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .no-upsell.selected { border-color: var(--gray); }
+    .no-upsell-checkbox {
+      width: 22px; height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .no-upsell.selected .no-upsell-checkbox {
+      background: var(--gray);
+      border-color: var(--gray);
+      color: #000;
+    }
+    .no-upsell-text { font-size: 0.88rem; color: var(--gray); }
+
+    /* ── SUMMARY ── */
+    .summary-card {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .summary-card h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .summary-row {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row .key { color: var(--gray); }
+    .summary-row .val { font-weight: 600; }
+    .summary-total {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding: 16px 0 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .summary-total .total-val { color: var(--orange); font-size: 1.3rem; }
+
+    /* ── BUTTONS ── */
+    .btn-next {
+      width: 100%;
+      background: var(--orange);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 18px 32px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      box-shadow: 0 0 30px rgba(255,140,0,0.3);
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-next:hover {
+      background: #ffa020;
+      box-shadow: 0 0 40px rgba(255,140,0,0.5);
+      transform: translateY(-1px);
+    }
+    .btn-next:active { transform: translateY(1px); box-shadow: none; }
+    .btn-back {
+      width: 100%;
+      background: transparent;
+      color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-back:hover { border-color: var(--gray); color: var(--white); }
+
+    /* ── SUCCESS ── */
+    .success-screen {
+      text-align: center;
+      padding: 48px 0 64px;
+    }
+    .success-icon {
+      width: 96px; height: 96px;
+      background: rgba(34,197,94,0.1);
+      border: 2px solid var(--success);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem;
+      margin: 0 auto 32px;
+      animation: pop 0.5s ease;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-screen h1 { font-size: 1.9rem; font-weight: 900; margin-bottom: 14px; }
+    .success-screen h1 span { color: var(--orange); }
+    .success-screen p { color: var(--light); font-size: 0.95rem; line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
+    .timeline {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .timeline h3 {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 20px;
+    }
+    .timeline-row {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .timeline-row:last-child { margin-bottom: 0; }
+    .t-dot {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--orange); color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.8rem; flex-shrink: 0;
+    }
+    .t-content .t-day {
+      font-size: 0.78rem; color: var(--orange);
+      font-weight: 700; letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .t-content .t-title { font-size: 0.92rem; font-weight: 700; }
+    .t-content .t-desc { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25d366; color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800; font-size: 0.95rem;
+      padding: 16px 32px; border-radius: 14px; border: none;
+      cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .wa-btn:hover { opacity: 0.9; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height: 1px; background: var(--border);
+      margin: 32px 0;
+    }
+
+    @media (max-width: 480px) {
+      .step h1 { font-size: 1.6rem; }
+      .color-options { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Page<span>Express</span></div>
+    <div class="badge-header">⚡ Entrega em 3 dias úteis</div>
+  </header>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-info">
+      <span id="stepLabel">Boas-vindas</span>
+      <span id="stepCount">Etapa 1 de 5</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width: 20%"></div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-wrapper">
+
+    <!-- ═══════════════════════════════ STEP 0 — BOAS-VINDAS -->
+    <div class="step active" id="step-0">
+      <div class="welcome-icon">🚀</div>
+      <div class="step-tag">✦ Você está a 3 dias do lançamento</div>
+      <h1>O próximo passo para o seu negócio <span>decolar.</span></h1>
+      <p>Reserve <strong>5 minutos</strong> para nos dar o combustível (as informações) e nós cuidamos da decolagem — o seu site profissional no ar em <strong>3 dias úteis.</strong></p>
+
+      <div class="timer-strip">
+        <div class="timer-icon">⏱️</div>
+        <div class="timer-text">
+          <strong>Esse briefing leva em média 5 minutos.</strong><br>
+          Quanto mais completo você preencher, mais incrível ficará sua página.
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="nextStep()">
+        Vamos começar →
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 1 — SPRINT 1: IDENTIDADE -->
+    <div class="step" id="step-1">
+      <div class="step-tag">Sprint 1 de 3 · Identidade</div>
+      <h2>Quem é você? 🏢</h2>
+      <p>Vamos montar a identidade visual do seu site. Sem complicação.</p>
+
+      <div class="field-group">
+        <label>Nome do seu Negócio <span class="required">*</span></label>
+        <input type="text" id="nomeNegocio" placeholder="Ex: Clínica Bella Pele, JM Construções…" />
+        <div class="field-hint">Exatamente como deve aparecer no topo do seu site.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Seu Nome Completo <span class="required">*</span></label>
+        <input type="text" id="nomeCliente" placeholder="Seu nome para nos comunicarmos" />
+      </div>
+
+      <div class="field-group">
+        <label>WhatsApp com DDD <span class="required">*</span></label>
+        <input type="tel" id="whatsappCliente" placeholder="(11) 99999-9999" />
+        <div class="field-hint">Para entrarmos em contato durante o projeto.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Envie sua Logo <span class="required">*</span></label>
+        <div class="upload-area" id="uploadLogo">
+          <input type="file" accept="image/*,.svg,.pdf,.ai,.eps" onchange="handleFile(this,'uploadLogo','logoFile')" />
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-label">Clique para enviar sua logo</div>
+          <div class="upload-sub">PNG, SVG ou PDF · Fundo transparente é ideal</div>
+        </div>
+        <input type="hidden" id="logoFile" />
+        <div class="field-hint">Não tem logo ainda? Sem problema — criamos uma tipografia moderna com o nome da sua empresa.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Cores da sua marca</label>
+        <div class="color-options">
+          <div class="color-option selected" id="colorOpt1" onclick="selectColor('minhasMarca')">
+            <input type="radio" name="cores" value="minhasMarca" checked />
+            <div class="color-dot" style="background: linear-gradient(135deg,#e74c3c,#3498db,#2ecc71)"></div>
+            <div class="color-option-text">Manter minha marca</div>
+          </div>
+          <div class="color-option" id="colorOpt2" onclick="selectColor('sugestaoPage')">
+            <input type="radio" name="cores" value="sugestaoPage" />
+            <div class="color-dot" style="background: linear-gradient(135deg,#000,#FF8C00)"></div>
+            <div class="color-option-text">Quero a sugestão da PageExpress</div>
+          </div>
+        </div>
+        <div class="field-hint">Se escolher sua marca, descreva as cores no campo abaixo (opcional).</div>
+      </div>
+
+      <div class="field-group" id="coresDesc" style="display:none">
+        <label>Descreva suas cores</label>
+        <input type="text" placeholder="Ex: Azul marinho e dourado, ou #003399 e #FFD700" />
+      </div>
+
+      <button class="btn-next" onclick="nextStep()">Próximo → Sprint 2</button>
+      <button class="btn-back" onclick="prevStep()">← Voltar</button>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 2 — SPRINT 2: CONTEÚDO -->
+    <div class="step" id="step-2">
+      <div class="step-tag">Sprint 2 de 3 · Conteúdo de Valor</div>
+      <h2>O que você vende? 💼</h2>
+      <p>Essas informações são o coração do seu site. Quanto mais detalhado, mais poderosa será sua página.</p>
+
+      <div class="field-group">
+        <label>O que você faz? <span class="required">*</span></label>
+        <textarea id="oQueFaz" placeholder="Ex: Sou dentista especializado em clareamento e restaurações. Atendo adultos e crianças na região de Belo Horizonte desde 2015…"></textarea>
+        <div class="field-hint">Explique seu serviço como se estivesse falando para um amigo. Sem termos técnicos.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Seus 3 Maiores Diferenciais <span class="required">*</span></label>
+        <div class="diff-list">
+          <div class="diff-item">
+            <div class="diff-num">1</div>
+            <input type="text" id="diff1" placeholder="Ex: Atendimento no mesmo dia, sem espera" />
+          </div>
+          <div class="diff-item">
+            <div class="diff-num">2</div>
+            <input type="text" id="diff2" placeholder="Ex: 10 anos de experiência no mercado" />
+          </div>
+          <div class="diff-item">
+            <div class="diff-num">3</div>
+            <input type="text" id="diff3" placeholder="Ex: Garantia de satisfação ou devolvemos o dinheiro" />
+          </div>
+        </div>
+        <div class="field-hint">O que seus clientes elogiam? O que você faz que o concorrente não faz?</div>
+      </div>
+
+      <div class="field-group">
+        <label>Sua Oferta Irresistível <span class="required">*</span></label>
+        <input type="text" id="oferta" placeholder="Ex: Orçamento 100% Grátis e Sem Compromisso" />
+        <div class="field-hint">O que o visitante ganha ao clicar no botão do seu site? Isso é o principal gatilho de conversão.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Área de atuação / Cidade</label>
+        <input type="text" id="cidade" placeholder="Ex: Belo Horizonte e região, ou Atendo online para todo o Brasil" />
+      </div>
+
+      <button class="btn-next" onclick="nextStep()">Próximo → Sprint 3</button>
+      <button class="btn-back" onclick="prevStep()">← Voltar</button>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 3 — SPRINT 3: CONVERSÃO & MÍDIA -->
+    <div class="step" id="step-3">
+      <div class="step-tag">Sprint 3 de 3 · Conversão e Mídia</div>
+      <h2>Conversão &amp; Mídia 📲</h2>
+      <p>Últimas informações para deixar seu site pronto para vender.</p>
+
+      <div class="field-group">
+        <label>WhatsApp de Vendas (com DDD) <span class="required">*</span></label>
+        <input type="tel" id="whatsappVendas" placeholder="(11) 99999-9999" />
+        <div class="field-hint">Este número aparecerá no botão flutuante do WhatsApp — o principal canal de conversão do seu site.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Instagram (opcional)</label>
+        <input type="text" id="instagram" placeholder="@seuperfil" />
+      </div>
+
+      <div class="field-group">
+        <label>Fotos e Materiais</label>
+        <div class="upload-area" id="uploadFotos">
+          <input type="file" multiple accept="image/*,video/*" onchange="handleFile(this,'uploadFotos','fotosFile')" />
+          <div class="upload-icon">📸</div>
+          <div class="upload-label">Clique para enviar fotos ou vídeos</div>
+          <div class="upload-sub">Fotos do serviço, produto, equipe ou prints de depoimentos</div>
+        </div>
+        <input type="hidden" id="fotosFile" />
+        <div class="field-hint">Qualquer imagem do seu negócio ajuda. Até foto do celular funciona. Sem foto? Usamos bancos de imagens profissionais.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Link de redes sociais com depoimentos (opcional)</label>
+        <input type="text" id="depoimentos" placeholder="Ex: link do Instagram, Google Meu Negócio, TikTok…" />
+        <div class="field-hint">Se tiver comentários positivos de clientes em alguma rede, cola o link aqui. Prova social aumenta muito a conversão.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Alguma observação especial?</label>
+        <textarea id="obs" placeholder="Referências de sites que gostou, cores específicas, coisas que não quer na página…" style="min-height:90px"></textarea>
+      </div>
+
+      <button class="btn-next" onclick="nextStep()">Próximo → Finalizar</button>
+      <button class="btn-back" onclick="prevStep()">← Voltar</button>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 4 — UPSELL -->
+    <div class="step" id="step-4">
+      <div class="step-tag">Passo final · Seu site no ar</div>
+      <h2>Deixe o trabalho sujo <span style="color:var(--orange)">com a gente.</span> 🔧</h2>
+      <p>Para seu site funcionar na internet, ele precisa de dois itens: um <strong>endereço próprio</strong> (domínio) e um <strong>servidor</strong> (hospedagem). Veja como ficou fácil:</p>
+
+      <!-- UPSELL CARD -->
+      <div class="upsell-card" id="upsellCard" onclick="toggleUpsell(true)">
+        <div class="upsell-header">
+          <div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:1.5px;color:var(--orange);text-transform:uppercase;margin-bottom:6px;">Adicional Opcional</div>
+            <div class="upsell-title">Domínio Próprio +<br>Hospedagem Premium</div>
+          </div>
+          <div class="upsell-price">+ R$ 100/ano</div>
+        </div>
+        <div class="upsell-desc">
+          Por apenas <strong>R$ 100,00 por ANO</strong>, nós compramos seu domínio (ex: <em>www.suaempresa.com.br</em>) e hospedamos seu site em nossos servidores de alta velocidade. Você não precisa mexer em nada técnico — agora nem nunca.
+        </div>
+        <ul class="upsell-items">
+          <li>Seu site no ar, sem você precisar mexer em nada técnico</li>
+          <li>Domínio próprio registrado no seu nome</li>
+          <li>Certificado de segurança (cadeadinho verde)</li>
+          <li>A gente renova tudo pra você todo ano</li>
+          <li>Suporte direto pelo WhatsApp</li>
+        </ul>
+        <div class="upsell-checkbox-row">
+          <div class="custom-checkbox" id="upsellCheck">✓</div>
+          <div class="checkbox-label">
+            Sim! Quero meu site profissional no ar agora
+            <span>(+ R$ 100,00/ano)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEM UPSELL -->
+      <div class="no-upsell" id="noUpsellCard" onclick="toggleUpsell(false)">
+        <div class="no-upsell-checkbox" id="noUpsellCheck"></div>
+        <div class="no-upsell-text">Não, eu já tenho domínio e hospedagem própria — enviarei os dados de acesso.</div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- RESUMO DO PEDIDO -->
+      <div class="summary-card">
+        <h3>📋 Resumo do Pedido</h3>
+        <div class="summary-row">
+          <span class="key">Landing Page Express</span>
+          <span class="val">R$ 297,00</span>
+        </div>
+        <div class="summary-row">
+          <span class="key">Entrega</span>
+          <span class="val" style="color:var(--orange)">3 dias úteis</span>
+        </div>
+        <div class="summary-row" id="upsellRow" style="display:none">
+          <span class="key">Domínio + Hospedagem</span>
+          <span class="val" style="color:var(--orange)">+ R$ 100,00/ano</span>
+        </div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span class="total-val" id="totalVal">R$ 297,00</span>
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="submitForm()" style="font-size:1.05rem;padding:20px;">
+        🚀 Enviar Briefing e Decolar!
+      </button>
+      <button class="btn-back" onclick="prevStep()">← Voltar</button>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 5 — SUCESSO -->
+    <div class="step" id="step-5">
+      <div class="success-screen">
+        <div class="success-icon">🎉</div>
+        <div class="step-tag">Briefing recebido com sucesso!</div>
+        <h1>Sua página está <span>em produção!</span></h1>
+        <p>Recebemos todas as informações. Nossa equipe já começou a trabalhar no seu projeto. Fique de olho no WhatsApp — entraremos em contato em breve.</p>
+
+        <div class="timeline">
+          <h3>⚡ Seu cronograma de 3 dias</h3>
+          <div class="timeline-row">
+            <div class="t-dot">D1</div>
+            <div class="t-content">
+              <div class="t-day">DIA 1 — Briefing e Estrutura</div>
+              <div class="t-title">Análise e planejamento</div>
+              <div class="t-desc">Revisamos seu briefing e montamos a estrutura da página.</div>
+            </div>
+          </div>
+          <div class="timeline-row">
+            <div class="t-dot">D2</div>
+            <div class="t-content">
+              <div class="t-day">DIA 2 — Design e Copy</div>
+              <div class="t-title">Criação visual e textos</div>
+              <div class="t-desc">Design completo com os textos pensados para converter.</div>
+            </div>
+          </div>
+          <div class="timeline-row">
+            <div class="t-dot">D3</div>
+            <div class="t-content">
+              <div class="t-day">DIA 3 — Entrega e Publicação</div>
+              <div class="t-title">Seu site no ar ✅</div>
+              <div class="t-desc">Publicamos e enviamos o link finalizado no seu WhatsApp.</div>
+            </div>
+          </div>
+        </div>
+
+        <a class="wa-btn" href="https://wa.me/5534984341665534984434166?text=Olá!%20Acabei%20de%20enviar%20meu%20briefing%20pela%20PageExpress.%20Pode%20confirmar%20o%20recebimento%3F" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.121 1.533 5.851L.057 23.573a.5.5 0 0 0 .611.637l5.92-1.556A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.87 9.87 0 0 1-5.031-1.374l-.36-.214-3.734.981.996-3.628-.235-.374A9.86 9.86 0 0 1 2.118 12C2.118 6.533 6.533 2.118 12 2.118S21.882 6.533 21.882 12 17.467 21.882 12 21.882z"/></svg>
+          Confirmar recebimento no WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /form-wrapper -->
+
+  <script>
+    let currentStep = 0;
+    const totalSteps = 5;
+    let upsellSelected = true;
+
+    const stepLabels = ['Boas-vindas','Sprint 1 · Identidade','Sprint 2 · Conteúdo','Sprint 3 · Mídia','Finalização'];
+
+    function updateProgress() {
+      const pct = ((currentStep + 1) / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('stepLabel').textContent = stepLabels[Math.min(currentStep, stepLabels.length-1)];
+      document.getElementById('stepCount').textContent = `Etapa ${currentStep + 1} de ${totalSteps}`;
+    }
+
+    function showStep(n) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-' + n).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps - 1) {
+        currentStep++;
+        showStep(currentStep);
+        updateProgress();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+        updateProgress();
+      }
+    }
+
+    function handleFile(input, areaId, hiddenId) {
+      const area = document.getElementById(areaId);
+      if (input.files && input.files.length > 0) {
+        const names = Array.from(input.files).map(f => f.name).join(', ');
+        area.classList.add('has-file');
+        area.querySelector('.upload-label').textContent = '✅ ' + names;
+        area.querySelector('.upload-sub').textContent = input.files.length > 1
+          ? input.files.length + ' arquivo(s) selecionado(s)' : '';
+        document.getElementById(hiddenId).value = names;
+      }
+    }
+
+    let colorChoice = 'minhasMarca';
+    function selectColor(val) {
+      colorChoice = val;
+      document.getElementById('colorOpt1').classList.toggle('selected', val === 'minhasMarca');
+      document.getElementById('colorOpt2').classList.toggle('selected', val === 'sugestaoPage');
+      document.getElementById('coresDesc').style.display = val === 'minhasMarca' ? 'block' : 'none';
+    }
+
+    function toggleUpsell(val) {
+      upsellSelected = val;
+      document.getElementById('upsellCard').classList.toggle('selected', val);
+      document.getElementById('noUpsellCard').classList.toggle('selected', !val);
+      document.getElementById('upsellCheck').style.display = val ? 'flex' : 'none';
+      document.getElementById('noUpsellCheck').textContent = val ? '' : '✓';
+      document.getElementById('noUpsellCheck').style.background = val ? '' : 'var(--gray)';
+      document.getElementById('noUpsellCheck').style.borderColor = val ? 'var(--border)' : 'var(--gray)';
+      document.getElementById('upsellRow').style.display = val ? 'flex' : 'none';
+      document.getElementById('totalVal').textContent = val ? 'R$ 397,00' : 'R$ 297,00';
+    }
+
+    // Init upsell state
+    toggleUpsell(true);
+
+    function submitForm() {
+      // Rastreia conversão no Meta Pixel
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead');
+        fbq('track', 'CompleteRegistration');
+      }
+
+      // Monta mensagem para WhatsApp
+      const nome       = document.getElementById('nomeNegocio').value || '(não informado)';
+      const cliente    = document.getElementById('nomeCliente').value || '';
+      const wa         = document.getElementById('whatsappCliente').value || '';
+      const oQueFaz    = document.getElementById('oQueFaz').value || '';
+      const diff1      = document.getElementById('diff1').value || '';
+      const diff2      = document.getElementById('diff2').value || '';
+      const diff3      = document.getElementById('diff3').value || '';
+      const oferta     = document.getElementById('oferta').value || '';
+      const waVendas   = document.getElementById('whatsappVendas').value || '';
+      const insta      = document.getElementById('instagram').value || '';
+      const obs        = document.getElementById('obs').value || '';
+      const hospedagem = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
+      const total      = upsellSelected ? 'R$ 397,00' : 'R$ 297,00';
+
+      const msg = `🚀 *NOVO BRIEFING PAGEEXPRESS*\n\n`
+        + `*Negócio:* ${nome}\n`
+        + `*Cliente:* ${cliente}\n`
+        + `*WhatsApp:* ${wa}\n\n`
+        + `*O que faz:* ${oQueFaz}\n\n`
+        + `*Diferenciais:*\n1. ${diff1}\n2. ${diff2}\n3. ${diff3}\n\n`
+        + `*Oferta:* ${oferta}\n`
+        + `*WhatsApp vendas:* ${waVendas}\n`
+        + `*Instagram:* ${insta}\n\n`
+        + `*Hospedagem:* ${hospedagem}\n`
+        + `*Total:* ${total}\n\n`
+        + `*Obs:* ${obs}`;
+
+      const waLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
+
+      currentStep = 5;
+      showStep(5);
+      document.getElementById('progressWrap').style.display = 'none';
+      updateProgress();
+
+      // Abre WhatsApp após 1.5s
+      setTimeout(() => { window.open(waLink, '_blank'); }, 1500);
+    }
+  </script>
+</body>
+</html>
