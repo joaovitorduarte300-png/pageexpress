@@ -916,19 +916,12 @@
       const hospLabel    = upsellSelected ? 'SIM (+R$100/ano)' : 'NÃO (tem própria)';
 
       const msg = `Briefing respondido`;
-
-      const waBtnLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
-      document.getElementById('waBtnSucesso').href = waBtnLink;
-
-      const waLink = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
+      document.getElementById('waBtnSucesso').href = `https://wa.me/5534984341665?text=${encodeURIComponent(msg)}`;
 
       currentStep = 5;
       showStep(5);
       document.getElementById('progressWrap').style.display = 'none';
       updateProgress();
-
-      // Envia dados completos para o admin automaticamente após 1.5s
-      setTimeout(() => { window.open(waLink, '_blank'); }, 1500);
     }
   </script>
 </body>
