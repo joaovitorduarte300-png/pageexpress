@@ -639,7 +639,7 @@
 <div class="toast" id="toast">✅ Salvo com sucesso!</div>
 
 <script>
-const FIREBASE_URL = 'COLE_SUA_URL_FIREBASE_AQUI';
+const FIREBASE_URL = 'https://pageexpress-e91f4-default-rtdb.firebaseio.com';
 
 // ═══════════════════════════════════════════════════
 //  DATA LAYER
@@ -708,7 +708,7 @@ function init() {
 //  FIREBASE
 // ═══════════════════════════════════════════════════
 function loadFromFirebase() {
-  if (FIREBASE_URL === 'COLE_SUA_URL_FIREBASE_AQUI') return;
+  if (!FIREBASE_URL) return;
   fetch(FIREBASE_URL + '/clientes.json')
     .then(r => r.json())
     .then(data => {
