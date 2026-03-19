@@ -650,7 +650,7 @@
 
       <div class="field-group" id="coresDesc" style="display:none">
         <label>Descreva suas cores</label>
-        <input type="text" placeholder="Ex: Azul marinho e dourado, ou #003399 e #FFD700" />
+        <input type="text" id="descCores" placeholder="Ex: Azul marinho e dourado, ou #003399 e #FFD700" />
       </div>
 
       <button class="btn-next" onclick="nextStep()">Próximo → Sprint 2</button>
@@ -960,14 +960,37 @@
 
     function handleFile(input, areaId, hiddenId) {
       const area = document.getElementById(areaId);
-      if (input.files && input.files.length > 0) {
-        const names = Array.from(input.files).map(f => f.name).join(', ');
-        area.classList.add('has-file');
-        area.querySelector('.upload-label').textContent = '✅ ' + names;
-        area.querySelector('.upload-sub').textContent = input.files.length > 1
-          ? input.files.length + ' arquivo(s) selecionado(s)' : '';
-        document.getElementById(hiddenId).value = names;
-      }
+      const files = Array.from(input.files || []);
+      if (!files.length) return;
+      area.classList.add('has-file');
+      area.querySelector('.upload-label').textContent = '⏳ Preparando ' + files.length + ' arquivo(s)...';
+      area.querySelector('.upload-sub').textContent = 'Aguarde...';
+      const MAX_W = 900, QUALITY = 0.72;
+      const promises = files.map(file => new Promise(resolve => {
+        if (!file.type.startsWith('image/')) {
+          resolve({ name: file.name, data: null, type: file.type });
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve({ name: file.name, data: canvas.toDataURL('image/jpeg', QUALITY), type: 'image/jpeg' });
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }));
+      Promise.all(promises).then(results => {
+        document.getElementById(hiddenId).value = JSON.stringify(results);
+        area.querySelector('.upload-label').textContent = '✅ ' + files.length + ' arquivo(s) pronto(s)';
+        area.querySelector('.upload-sub').textContent = files.map(f => f.name).join(', ');
+      });
     }
 
     let colorChoice = 'minhasMarca';
@@ -1014,12 +1037,20 @@
 
       // Monta objeto do cliente para o painel
       _lastClientData = {};
+      let logoData = [];
+      let fotosData = [];
+      try { logoData = JSON.parse(document.getElementById('logoFile').value || '[]'); } catch(e) {}
+      try { fotosData = JSON.parse(document.getElementById('fotosFile').value || '[]'); } catch(e) {}
+
       const clientData = {
         nome, cliente, wa, waVendas, instagram: insta,
         oQueFaz, diff1, diff2, diff3, oferta,
         cidade: document.getElementById('cidade').value || '',
+        descCores: document.getElementById('descCores')?.value || '',
         depoimentos: document.getElementById('depoimentos').value || '',
         obs, hospedagem, cores: colorChoice, valor: '297',
+        logo: logoData,
+        fotos: fotosData,
         createdAt: Date.now()
       };
       _lastClientData = clientData;
