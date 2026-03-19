@@ -805,6 +805,26 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.121 1.533 5.851L.057 23.573a.5.5 0 0 0 .611.637l5.92-1.556A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.87 9.87 0 0 1-5.031-1.374l-.36-.214-3.734.981.996-3.628-.235-.374A9.86 9.86 0 0 1 2.118 12C2.118 6.533 6.533 2.118 12 2.118S21.882 6.533 21.882 12 17.467 21.882 12 21.882z"/></svg>
           Briefing preenchido! Falar com a equipe
         </a>
+
+        <button onclick="downloadPDF()" style="
+          margin-top:12px;
+          background:transparent;
+          border:2px solid #FF8C00;
+          color:#FF8C00;
+          padding:14px 32px;
+          border-radius:12px;
+          font-size:1rem;
+          font-weight:700;
+          cursor:pointer;
+          display:flex;
+          align-items:center;
+          gap:8px;
+          width:100%;
+          justify-content:center;
+          transition:all .2s;
+        " onmouseover="this.style.background='#FF8C00';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='#FF8C00'">
+          📄 Baixar PDF com todas as respostas
+        </button>
       </div>
     </div>
 
@@ -816,6 +836,96 @@
     let currentStep = 0;
     const totalSteps = 5;
     let upsellSelected = true;
+    let _lastClientData = {};
+
+    function downloadPDF() {
+      const d = _lastClientData;
+      const dataFormatada = d.createdAt ? new Date(d.createdAt).toLocaleString('pt-BR') : new Date().toLocaleString('pt-BR');
+      const hospLabel = d.hospedagem === 'sim' ? '✅ SIM — Hospedagem + Domínio (+R$100/ano)' : '❌ NÃO — Cliente tem hospedagem própria';
+      const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+      <title>Briefing - ${d.nome||'Cliente'} | PageExpress</title>
+      <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#fff;color:#111;padding:40px;font-size:14px}
+        .header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #FF8C00;padding-bottom:16px;margin-bottom:28px}
+        .logo{font-size:22px;font-weight:900;color:#000}
+        .logo span{color:#FF8C00}
+        .badge{background:#FF8C00;color:#000;font-weight:700;padding:4px 12px;border-radius:20px;font-size:12px}
+        .title{font-size:20px;font-weight:800;margin-bottom:4px}
+        .sub{color:#666;font-size:13px;margin-bottom:28px}
+        .section{margin-bottom:24px}
+        .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#FF8C00;border-bottom:1px solid #eee;padding-bottom:6px;margin-bottom:14px}
+        .row{display:flex;gap:24px;margin-bottom:10px}
+        .field{flex:1}
+        .label{font-size:11px;color:#999;font-weight:600;text-transform:uppercase;margin-bottom:3px}
+        .value{font-size:14px;color:#111;font-weight:500;padding:8px 10px;background:#f8f8f8;border-radius:6px;min-height:32px;word-break:break-word}
+        .value.destaque{background:#fff8f0;border-left:3px solid #FF8C00}
+        .footer{margin-top:36px;border-top:1px solid #eee;padding-top:16px;display:flex;justify-content:space-between;color:#aaa;font-size:11px}
+        @media print{body{padding:20px}.badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}.value.destaque{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+      </style></head><body>
+      <div class="header">
+        <div class="logo">Page<span>Express</span></div>
+        <div class="badge">BRIEFING DO CLIENTE</div>
+      </div>
+      <div class="title">📋 ${d.nome || 'Sem nome'}</div>
+      <div class="sub">Preenchido em: ${dataFormatada}</div>
+
+      <div class="section">
+        <div class="section-title">🧑 Identidade</div>
+        <div class="row">
+          <div class="field"><div class="label">Nome do Negócio</div><div class="value">${d.nome||'—'}</div></div>
+          <div class="field"><div class="label">Nome do Cliente</div><div class="value">${d.cliente||'—'}</div></div>
+        </div>
+        <div class="row">
+          <div class="field"><div class="label">WhatsApp do Cliente</div><div class="value">${d.wa||'—'}</div></div>
+          <div class="field"><div class="label">Cidade</div><div class="value">${d.cidade||'—'}</div></div>
+        </div>
+        <div class="row">
+          <div class="field"><div class="label">Instagram</div><div class="value">${d.instagram||'—'}</div></div>
+          <div class="field"><div class="label">Preferência de Cores</div><div class="value">${d.cores==='minhasMarca'?'Manter cores da marca':'Sugestão da PageExpress'}</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💼 Conteúdo & Proposta</div>
+        <div class="field" style="margin-bottom:10px"><div class="label">O que faz?</div><div class="value destaque">${d.oQueFaz||'—'}</div></div>
+        <div class="row">
+          <div class="field"><div class="label">Diferencial 1</div><div class="value">${d.diff1||'—'}</div></div>
+          <div class="field"><div class="label">Diferencial 2</div><div class="value">${d.diff2||'—'}</div></div>
+          <div class="field"><div class="label">Diferencial 3</div><div class="value">${d.diff3||'—'}</div></div>
+        </div>
+        <div class="field" style="margin-bottom:10px"><div class="label">Oferta Principal</div><div class="value destaque">${d.oferta||'—'}</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📲 Conversão & Mídia</div>
+        <div class="row">
+          <div class="field"><div class="label">WhatsApp de Vendas</div><div class="value">${d.waVendas||'—'}</div></div>
+          <div class="field"><div class="label">Depoimentos / Provas</div><div class="value">${d.depoimentos||'—'}</div></div>
+        </div>
+        <div class="field" style="margin-bottom:10px"><div class="label">Observações</div><div class="value">${d.obs||'—'}</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🌐 Hospedagem & Financeiro</div>
+        <div class="row">
+          <div class="field"><div class="label">Hospedagem + Domínio</div><div class="value destaque">${hospLabel}</div></div>
+          <div class="field"><div class="label">Valor do Projeto</div><div class="value"><strong>R$ ${d.valor||'297'}</strong></div></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>PageExpress — pageexpress0@gmail.com</span>
+        <span>Entrega em até 3 dias úteis</span>
+      </div>
+      </body></html>`;
+
+      const win = window.open('', '_blank');
+      win.document.write(html);
+      win.document.close();
+      win.focus();
+      setTimeout(() => { win.print(); }, 500);
+    }
 
     const stepLabels = ['Boas-vindas','Sprint 1 · Identidade','Sprint 2 · Conteúdo','Sprint 3 · Mídia','Finalização'];
 
@@ -903,20 +1013,23 @@
       const hospedagem = upsellSelected ? 'sim' : 'nao';
 
       // Monta objeto do cliente para o painel
+      _lastClientData = {};
       const clientData = {
         nome, cliente, wa, waVendas, instagram: insta,
         oQueFaz, diff1, diff2, diff3, oferta,
         cidade: document.getElementById('cidade').value || '',
         depoimentos: document.getElementById('depoimentos').value || '',
-        obs, hospedagem, cores: colorChoice, valor: '297'
+        obs, hospedagem, cores: colorChoice, valor: '297',
+        createdAt: Date.now()
       };
+      _lastClientData = clientData;
 
       // Salva no Firebase
       if (FIREBASE_URL) {
         fetch(FIREBASE_URL + '/clientes.json', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...clientData, createdAt: Date.now(), status: 'novo' })
+          body: JSON.stringify({ ...clientData, status: 'novo' })
         })
         .then(r => {
           if (!r.ok) throw new Error('HTTP ' + r.status);
