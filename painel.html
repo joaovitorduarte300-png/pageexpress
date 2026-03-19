@@ -709,21 +709,35 @@ function init() {
 // ═══════════════════════════════════════════════════
 function loadFromFirebase() {
   if (!FIREBASE_URL) return;
+  showToast('🔄 Sincronizando com Firebase...');
   fetch(FIREBASE_URL + '/clientes.json')
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
     .then(data => {
-      if (!data) return;
+      if (!data) {
+        showToast('📭 Nenhum briefing no Firebase ainda.');
+        return;
+      }
       const firebaseClients = Object.entries(data).map(([fbId, c]) => ({...c, fbId}));
-      // Merge com localStorage sem duplicar
+      let novos = 0;
       firebaseClients.forEach(fc => {
-        const exists = clients.find(c => c.wa === fc.wa && c.nome === fc.nome && c.createdAt === fc.createdAt);
-        if (!exists) clients.push({ id: fc.fbId || uid(), ...fc });
+        const exists = clients.find(c => c.createdAt && c.createdAt === fc.createdAt);
+        if (!exists) {
+          clients.push({ id: fc.fbId || uid(), ...fc });
+          novos++;
+        }
       });
       save();
       renderClients();
       updateStats();
+      showToast(novos > 0 ? `✅ ${novos} novo(s) cliente(s) carregado(s)!` : '✅ Painel atualizado!');
     })
-    .catch(err => console.warn('Firebase load:', err));
+    .catch(err => {
+      console.error('Firebase load error:', err);
+      showToast('❌ Erro ao conectar com Firebase: ' + err.message);
+    });
 }
 
 // ═══════════════════════════════════════════════════
