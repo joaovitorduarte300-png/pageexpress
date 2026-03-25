@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moda & Estilo Boutique | Seu estilo, sua identidade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0009;
+      --brand: #1a0533;
+      --accent: #e91e8c;
+      --accent-light: #f055a8;
+      --white: #fdf0f8;
+      --gray: #b08ca8;
+      --card-bg: #150828;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      background: rgba(13,0,9,0.93); backdrop-filter: blur(12px);
+      padding: 18px 40px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(233,30,140,0.18);
+    }
+    .logo-text { font-size: 20px; font-weight: 800; color: var(--accent); }
+    .logo-sub { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
+    nav a { color: var(--gray); text-decoration: none; margin-left: 28px; font-size: 14px; font-weight: 500; transition: color .2s; }
+    nav a:hover { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 10px 22px; border-radius: 6px; font-weight: 700 !important; }
+    .nav-cta:hover { background: var(--accent-light) !important; }
+
+    .hero {
+      height: 100vh; min-height: 650px; position: relative;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      background: url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1400&q=80') center/cover no-repeat;
+    }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,5,51,0.90) 0%, rgba(13,0,9,0.78) 100%); }
+    .hero-content { position: relative; z-index: 2; max-width: 760px; padding: 20px; }
+    .hero-badge { display: inline-block; background: rgba(233,30,140,0.12); border: 1px solid var(--accent); color: var(--accent); padding: 6px 18px; border-radius: 30px; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(36px, 6vw, 68px); font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: 19px; color: rgba(253,240,248,0.82); margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; }
+    .btn-primary { display: inline-block; background: var(--accent); color: #fff; padding: 16px 40px; border-radius: 8px; font-weight: 800; font-size: 16px; text-decoration: none; transition: all .25s; }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(233,30,140,0.45); }
+    .btn-outline { display: inline-block; border: 2px solid var(--accent); color: var(--accent); padding: 14px 36px; border-radius: 8px; font-weight: 700; font-size: 16px; text-decoration: none; margin-left: 14px; transition: all .25s; }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 56px; flex-wrap: wrap; }
+    .stat-num { font-size: 36px; font-weight: 900; color: var(--accent); }
+    .stat-label { font-size: 13px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+
+    section { padding: 90px 20px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag { color: var(--accent); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { color: var(--gray); font-size: 17px; max-width: 560px; }
+    .section-header { margin-bottom: 56px; }
+
+    .diferenciais { background: var(--brand); }
+    .dif-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+    .dif-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(233,30,140,0.15); border-radius: 14px; padding: 36px 28px; text-align: center; transition: all .3s; }
+    .dif-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .dif-icon { font-size: 44px; margin-bottom: 18px; }
+    .dif-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .dif-text { color: var(--gray); font-size: 14px; line-height: 1.7; }
+
+    .interior-section { background: var(--bg); }
+    .interior-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .interior-img { border-radius: 16px; overflow: hidden; }
+    .interior-img img { width: 100%; height: 420px; object-fit: cover; display: block; }
+    .interior-text h2 { font-size: 36px; font-weight: 900; margin-bottom: 20px; }
+    .interior-text h2 span { color: var(--accent); }
+    .interior-text p { color: var(--gray); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .interior-list { list-style: none; margin: 24px 0; }
+    .interior-list li { padding: 8px 0; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .interior-list li::before { content: '✦'; color: var(--accent); font-size: 12px; }
+
+    .servicos { background: var(--brand); }
+    .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .servico-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(233,30,140,0.15); border-radius: 14px; padding: 32px 24px; text-align: center; transition: all .3s; display: flex; flex-direction: column; align-items: center; }
+    .servico-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .servico-icon { font-size: 40px; margin-bottom: 14px; }
+    .servico-nome { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .servico-preco { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 18px; }
+    .btn-servico { width: 100%; background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 7px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; display: block; transition: all .2s; }
+    .btn-servico:hover { background: var(--accent-light); }
+
+    .depoimentos { background: var(--bg); }
+    .dep-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .dep-card { background: var(--card-bg); border: 1px solid rgba(233,30,140,0.12); border-radius: 14px; padding: 32px 28px; }
+    .dep-stars { color: var(--accent); font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
+    .dep-text { color: rgba(253,240,248,0.85); font-size: 15px; line-height: 1.75; margin-bottom: 22px; font-style: italic; }
+    .dep-author { display: flex; align-items: center; gap: 14px; }
+    .dep-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 18px; }
+    .dep-name { font-weight: 700; font-size: 15px; }
+    .dep-role { font-size: 12px; color: var(--gray); }
+
+    .cta-final { background: linear-gradient(135deg, var(--brand), #0a001a); text-align: center; border-top: 1px solid rgba(233,30,140,0.2); }
+    .cta-final h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; margin-bottom: 16px; }
+    .cta-final h2 span { color: var(--accent); }
+    .cta-final p { color: var(--gray); font-size: 18px; margin-bottom: 40px; }
+
+    footer { background: #080008; border-top: 1px solid rgba(233,30,140,0.1); padding: 48px 20px 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; }
+    .footer-brand p { color: var(--gray); font-size: 14px; line-height: 1.8; margin-top: 12px; max-width: 280px; }
+    .footer-col h4 { color: var(--accent); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
+    .footer-col p, .footer-col a { color: var(--gray); font-size: 14px; line-height: 1.9; text-decoration: none; display: block; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--gray); font-size: 13px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+    .whatsapp-btn { position: fixed; bottom: 28px; right: 28px; z-index: 999; background: #25d366; color: white; width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.5); transition: all .3s; animation: pulse 2s infinite; }
+    .whatsapp-btn:hover { transform: scale(1.12); }
+    @keyframes pulse { 0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); } 50% { box-shadow: 0 6px 36px rgba(37,211,102,0.8); } }
+
+    @media(max-width:900px) {
+      header { padding: 16px 20px; } nav { display: none; }
+      .dif-grid, .dep-grid, .interior-grid, .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width:600px) { .servicos-grid { grid-template-columns: 1fr 1fr; } .btn-outline { margin-left:0; margin-top:12px; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo-text">👗 Moda & Estilo</div>
+    <div class="logo-sub">Boutique & Consultoria</div>
+  </div>
+  <nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="https://wa.me/5511999990000" class="nav-cta">Falar com consultora</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✨ Consultoria de Moda em São Paulo</div>
+    <h1>Seu estilo, sua <span>identidade.</span><br/>Nós te ajudamos a encontrar.</h1>
+    <p>Mais de 500 mulheres transformadas. Consultoria presencial e online com profissional certificada e olhar único para cada cliente.</p>
+    <div>
+      <a href="https://wa.me/5511999990000" class="btn-primary">💬 Falar com a consultora</a>
+      <a href="#servicos" class="btn-outline">Nossos serviços</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Clientes transformadas</div></div>
+      <div class="stat"><div class="stat-num">8 anos</div><div class="stat-label">De experiência</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Personalizadas</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="diferenciais" id="sobre">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Nosso diferencial</div>
+      <h2 class="section-title">Moda que liberta, não que aprisiona</h2>
+    </div>
+    <div class="dif-grid">
+      <div class="dif-card">
+        <div class="dif-icon">🎓</div>
+        <div class="dif-title">Consultora Certificada</div>
+        <div class="dif-text">Formação internacional em consultoria de imagem e coloração pessoal. Cada análise é feita com método científico e sensibilidade artística.</div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">💻</div>
+        <div class="dif-title">Presencial e Online</div>
+        <div class="dif-text">Atendemos em nosso espaço no Itaim Bibi e também por videochamada para clientes de qualquer parte do Brasil.</div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">💎</div>
+        <div class="dif-title">Resultado Garantido</div>
+        <div class="dif-text">Não entregamos tendência, entregamos identidade. Você sai sabendo exatamente o que veste, por que veste e como combinar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="interior-section">
+  <div class="container">
+    <div class="interior-grid">
+      <div class="interior-img">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Consultoria de Moda & Estilo"/>
+      </div>
+      <div class="interior-text">
+        <h2>Uma nova versão <span>de você</span><br/>começa aqui</h2>
+        <p>Você já parou no closet lotado sentindo que não tem nada para usar? Isso é mais comum do que parece — e tem solução. A consultoria de imagem não é luxo, é investimento em autoconhecimento.</p>
+        <p>Com nosso método, você aprende a usar o que já tem, investe com inteligência no que falta e para de perder tempo e dinheiro com compras erradas.</p>
+        <ul class="interior-list">
+          <li>Análise de coloração pessoal e biotipo</li>
+          <li>Curadoria personalizada do guarda-roupa atual</li>
+          <li>Lista de compras estratégica sem desperdício</li>
+          <li>Montagem de looks completos e versáteis</li>
+        </ul>
+        <a href="https://wa.me/5511999990000" class="btn-primary" style="margin-top:8px;">Quero me transformar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Serviços</div>
+      <h2 class="section-title">Do guarda-roupa ao tapete vermelho</h2>
+      <p class="section-sub">Cada serviço 100% personalizado para o seu estilo de vida.</p>
+    </div>
+    <div class="servicos-grid">
+      <div class="servico-card">
+        <div class="servico-icon">🪞</div>
+        <div class="servico-nome">Consultoria de Imagem</div>
+        <div class="servico-preco">R$350</div>
+        <a href="https://wa.me/5511999990000?text=Quero saber mais sobre Consultoria de Imagem" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">🛍️</div>
+        <div class="servico-nome">Personal Shopping</div>
+        <div class="servico-preco">R$280</div>
+        <a href="https://wa.me/5511999990000?text=Quero fazer Personal Shopping" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">👔</div>
+        <div class="servico-nome">Montagem de Looks</div>
+        <div class="servico-preco">R$150</div>
+        <a href="https://wa.me/5511999990000?text=Quero Montagem de Looks" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">👚</div>
+        <div class="servico-nome">Curadoria Guarda-Roupa</div>
+        <div class="servico-preco">R$500</div>
+        <a href="https://wa.me/5511999990000?text=Quero Curadoria do Guarda-Roupa" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">💄</div>
+        <div class="servico-nome">Maquiagem p/ Evento</div>
+        <div class="servico-preco">R$200</div>
+        <a href="https://wa.me/5511999990000?text=Quero Maquiagem para Evento" class="btn-servico">Agendar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="depoimentos" id="depoimentos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Depoimentos</div>
+      <h2 class="section-title">Transformações reais, palavras verdadeiras</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"A consultoria mudou minha relação com a roupa completamente. Eu tinha medo de ser julgada pelas minhas escolhas. A Camila me ensinou que estilo é expressão, não julgamento. Hoje me visto com confiança todos os dias."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">F</div>
+          <div><div class="dep-name">Fernanda Costa</div><div class="dep-role">34 anos • Executiva de marketing</div></div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Como influenciadora, minha imagem é meu trabalho. Precisava de um olhar técnico para sistematizar meu estilo. A curadoria do guarda-roupa foi reveladora — descartei 60% do que tinha e me sinto mais estilosa do que nunca."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">J</div>
+          <div><div class="dep-name">Juliana Alves</div><div class="dep-role">29 anos • Criadora de conteúdo</div></div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Médica não tem tempo para pensar em roupa — achava eu. Mas a Camila montou um guarda-roupa funcional e elegante que respeita minha rotina corrida. Agora me arrumo em 10 minutos e sempre recebo elogios no trabalho."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">P</div>
+          <div><div class="dep-name">Patrícia Ramos</div><div class="dep-role">45 anos • Médica cardiologista</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Pronta para se <span>descobrir?</span></h2>
+    <p>Vagas limitadas por mês para garantir atendimento 100% personalizado. Reserve a sua agora.</p>
+    <a href="https://wa.me/5511999990000?text=Olá! Quero agendar uma consultoria de imagem" class="btn-primary" style="font-size:18px; padding:18px 48px;">💬 Agendar minha consultoria</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text" style="font-size:22px;">👗 Moda & Estilo Boutique</div>
+      <p>Consultoria de imagem e personal shopping em São Paulo. Mais de 500 mulheres transformadas com método e personalidade.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Localização</h4>
+      <p>Rua Jerônimo da Veiga, 384</p>
+      <p>Itaim Bibi — SP</p>
+      <p>CEP 04536-001</p>
+    </div>
+    <div class="footer-col">
+      <h4>Atendimento</h4>
+      <p>Seg–Sex: 10h às 19h</p>
+      <p>Sábado: 10h às 16h</p>
+      <a href="https://wa.me/5511999990000" style="color: var(--accent); margin-top:10px; font-weight:600;">📷 @modaestilo.boutique</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Moda & Estilo Boutique — Todos os direitos reservados</div>
+</footer>
+
+<a href="https://wa.me/5511999990000?text=Olá! Vi o site e quero saber mais sobre a consultoria!" class="whatsapp-btn" target="_blank">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.669 4.8 1.835 6.793L2 30l7.42-1.808A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.56 11.56 0 01-5.894-1.608l-.424-.252-4.404 1.072 1.12-4.28-.277-.44A11.56 11.56 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zm6.324-8.664c-.346-.174-2.048-1.01-2.366-1.124-.317-.115-.548-.173-.778.174-.23.346-.892 1.122-1.094 1.353-.2.23-.403.26-.748.086-.346-.173-1.46-.538-2.78-1.716-1.028-.917-1.72-2.048-1.924-2.394-.2-.346-.02-.533.153-.706.156-.155.346-.404.52-.606.172-.2.23-.346.346-.577.115-.23.058-.432-.03-.606-.086-.173-.778-1.877-1.066-2.57-.28-.673-.566-.582-.778-.593-.2-.01-.432-.012-.663-.012s-.606.086-.923.433c-.317.346-1.21 1.18-1.21 2.88 0 1.7 1.237 3.34 1.41 3.572.172.23 2.434 3.716 5.896 5.21.824.356 1.468.568 1.97.727.827.263 1.58.226 2.174.137.663-.1 2.048-.838 2.337-1.648.288-.81.288-1.504.2-1.648-.086-.144-.317-.23-.663-.404z"/>
+  </svg>
+</a>
+
+</body>
+</html>

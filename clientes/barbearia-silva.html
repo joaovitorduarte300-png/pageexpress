@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barbearia Silva Premium | Onde cada corte conta uma história</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d;
+      --brand-dark: #1a1a2e;
+      --gold: #c8a96e;
+      --gold-light: #e2c98a;
+      --white: #f5f5f5;
+      --gray: #aaaaaa;
+      --card-bg: #161625;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      background: rgba(13,13,13,0.92); backdrop-filter: blur(10px);
+      padding: 18px 40px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(200,169,110,0.2);
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { font-size: 28px; }
+    .logo-text { font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; }
+    .logo-sub { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
+    nav a {
+      color: var(--gray); text-decoration: none; margin-left: 28px;
+      font-size: 14px; font-weight: 500; transition: color .2s;
+    }
+    nav a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: #0d0d0d !important; padding: 10px 22px;
+      border-radius: 6px; font-weight: 700 !important; margin-left: 28px !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: #0d0d0d !important; }
+
+    /* HERO */
+    .hero {
+      height: 100vh; min-height: 650px; position: relative;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1400&q=80') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(26,26,46,0.88) 0%, rgba(13,13,13,0.75) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 750px; padding: 20px; }
+    .hero-badge {
+      display: inline-block; background: rgba(200,169,110,0.15); border: 1px solid var(--gold);
+      color: var(--gold); padding: 6px 18px; border-radius: 30px; font-size: 13px;
+      font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero h1 { font-size: clamp(38px, 6vw, 72px); font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 19px; color: rgba(245,245,245,0.8); margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-primary {
+      display: inline-block; background: var(--gold); color: #0d0d0d;
+      padding: 16px 40px; border-radius: 8px; font-weight: 800; font-size: 16px;
+      text-decoration: none; transition: all .25s; letter-spacing: .3px;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(200,169,110,0.35); }
+    .btn-outline {
+      display: inline-block; border: 2px solid var(--gold); color: var(--gold);
+      padding: 14px 36px; border-radius: 8px; font-weight: 700; font-size: 16px;
+      text-decoration: none; margin-left: 14px; transition: all .25s;
+    }
+    .btn-outline:hover { background: var(--gold); color: #0d0d0d; }
+    .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 56px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 36px; font-weight: 900; color: var(--gold); }
+    .stat-label { font-size: 13px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* SECTIONS */
+    section { padding: 90px 20px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag { color: var(--gold); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { color: var(--gray); font-size: 17px; max-width: 560px; }
+    .section-header { margin-bottom: 56px; }
+
+    /* DIFERENCIAIS */
+    .diferenciais { background: var(--brand-dark); }
+    .dif-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+    .dif-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(200,169,110,0.15);
+      border-radius: 14px; padding: 36px 28px; text-align: center; transition: all .3s;
+    }
+    .dif-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .dif-icon { font-size: 44px; margin-bottom: 18px; }
+    .dif-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .dif-text { color: var(--gray); font-size: 14px; line-height: 1.7; }
+
+    /* INTERIOR FOTO */
+    .interior-section { background: #0d0d0d; }
+    .interior-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .interior-img { border-radius: 16px; overflow: hidden; position: relative; }
+    .interior-img img { width: 100%; height: 420px; object-fit: cover; display: block; }
+    .interior-img::after {
+      content: ''; position: absolute; inset: 0; border-radius: 16px;
+      border: 2px solid rgba(200,169,110,0.3);
+    }
+    .interior-text h2 { font-size: 36px; font-weight: 900; margin-bottom: 20px; }
+    .interior-text h2 span { color: var(--gold); }
+    .interior-text p { color: var(--gray); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .interior-list { list-style: none; margin: 24px 0; }
+    .interior-list li { padding: 8px 0; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .interior-list li::before { content: '✦'; color: var(--gold); font-size: 12px; }
+
+    /* SERVIÇOS */
+    .servicos { background: var(--brand-dark); }
+    .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .servico-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(200,169,110,0.15);
+      border-radius: 14px; padding: 32px 24px; text-align: center;
+      transition: all .3s; display: flex; flex-direction: column; align-items: center;
+    }
+    .servico-card:hover { border-color: var(--gold); transform: translateY(-5px); background: rgba(200,169,110,0.07); }
+    .servico-icon { font-size: 40px; margin-bottom: 14px; }
+    .servico-nome { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .servico-preco { font-size: 28px; font-weight: 900; color: var(--gold); margin-bottom: 18px; }
+    .servico-preco span { font-size: 15px; font-weight: 500; color: var(--gray); }
+    .btn-servico {
+      width: 100%; background: var(--gold); color: #0d0d0d; border: none;
+      padding: 12px; border-radius: 7px; font-weight: 700; font-size: 14px;
+      cursor: pointer; text-decoration: none; display: block; transition: all .2s;
+    }
+    .btn-servico:hover { background: var(--gold-light); }
+
+    /* DEPOIMENTOS */
+    .depoimentos { background: #0d0d0d; }
+    .dep-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .dep-card {
+      background: var(--card-bg); border: 1px solid rgba(200,169,110,0.12);
+      border-radius: 14px; padding: 32px 28px;
+    }
+    .dep-stars { color: var(--gold); font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
+    .dep-text { color: rgba(245,245,245,0.85); font-size: 15px; line-height: 1.75; margin-bottom: 22px; font-style: italic; }
+    .dep-author { display: flex; align-items: center; gap: 14px; }
+    .dep-avatar {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--gold);
+      display: flex; align-items: center; justify-content: center; font-weight: 800; color: #0d0d0d; font-size: 18px;
+    }
+    .dep-name { font-weight: 700; font-size: 15px; }
+    .dep-role { font-size: 12px; color: var(--gray); }
+
+    /* CTA FINAL */
+    .cta-final {
+      background: linear-gradient(135deg, var(--brand-dark), #0d0d20);
+      text-align: center; border-top: 1px solid rgba(200,169,110,0.2);
+    }
+    .cta-final h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; margin-bottom: 16px; }
+    .cta-final h2 span { color: var(--gold); }
+    .cta-final p { color: var(--gray); font-size: 18px; margin-bottom: 40px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      background: #080808; border-top: 1px solid rgba(200,169,110,0.1);
+      padding: 48px 20px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; }
+    .footer-brand p { color: var(--gray); font-size: 14px; line-height: 1.8; margin-top: 12px; max-width: 280px; }
+    .footer-col h4 { color: var(--gold); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
+    .footer-col p, .footer-col a { color: var(--gray); font-size: 14px; line-height: 1.9; text-decoration: none; display: block; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--gray); font-size: 13px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+    /* WHATSAPP FLUTUANTE */
+    .whatsapp-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      background: #25d366; color: white; width: 62px; height: 62px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 30px; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+      transition: all .3s; animation: pulse 2s infinite;
+    }
+    .whatsapp-btn:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,0.65); }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 36px rgba(37,211,102,0.8); }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      header { padding: 16px 20px; }
+      nav { display: none; }
+      .dif-grid, .dep-grid { grid-template-columns: 1fr; }
+      .interior-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+    }
+    @media(max-width:600px) {
+      .servicos-grid { grid-template-columns: 1fr 1fr; }
+      .btn-outline { margin-left: 0; margin-top: 12px; }
+      .hero-stats { gap: 20px; }
+      .stat-num { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">✂️</span>
+    <div>
+      <div class="logo-text">Barbearia Silva</div>
+      <div class="logo-sub">Premium</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="https://wa.me/5511999990000" class="nav-cta">Agendar agora</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Barbearia Premium em São Paulo ✦</div>
+    <h1>Onde cada corte<br/><span>conta uma história.</span></h1>
+    <p>15 anos transformando a aparência e a autoestima de homens que valorizam o melhor. Agende agora e sinta a diferença.</p>
+    <div>
+      <a href="https://wa.me/5511999990000" class="btn-primary">📱 Agendar pelo WhatsApp</a>
+      <a href="#servicos" class="btn-outline">Ver serviços</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de experiência</div></div>
+      <div class="stat"><div class="stat-num">8k+</div><div class="stat-label">Clientes atendidos</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Avaliação média</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="diferenciais" id="sobre">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Por que escolher a Silva?</div>
+      <h2 class="section-title">Experiência que você<br/>sente desde a entrada</h2>
+    </div>
+    <div class="dif-grid">
+      <div class="dif-card">
+        <div class="dif-icon">🏆</div>
+        <div class="dif-title">15 Anos de Excelência</div>
+        <div class="dif-text">Desde 2009 servindo os homens de São Paulo com os mais altos padrões de qualidade e técnica na arte da barbearia.</div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🎓</div>
+        <div class="dif-title">Profissionais Certificados</div>
+        <div class="dif-text">Toda a equipe possui certificação internacional. Técnicas atualizadas, produtos premium e olho clínico para o estilo de cada cliente.</div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🥃</div>
+        <div class="dif-title">Ambiente Premium</div>
+        <div class="dif-text">Espaço climatizado, cadeiras de couro legítimo, bebida cortesia e uma playlist feita para você relaxar enquanto se transforma.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="interior-section">
+  <div class="container">
+    <div class="interior-grid">
+      <div class="interior-img">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80" alt="Interior da Barbearia Silva"/>
+      </div>
+      <div class="interior-text">
+        <h2>Um corte, uma <span>experiência completa</span></h2>
+        <p>Na Barbearia Silva, cada visita é uma pausa do dia agitado. Um momento só seu. Você chega como cliente e sai como um homem renovado.</p>
+        <p>Utilizamos apenas produtos nacionais e importados de primeira linha, com foco em saúde capilar e resultado duradouro.</p>
+        <ul class="interior-list">
+          <li>Atendimento com hora marcada — sem fila, sem espera</li>
+          <li>Produtos premium nacionais e importados</li>
+          <li>Estacionamento próprio no local</li>
+          <li>Wi-Fi, TV e bebidas cortesia durante o atendimento</li>
+        </ul>
+        <a href="https://wa.me/5511999990000" class="btn-primary" style="margin-top:8px;">Reservar meu horário</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Nossos serviços</div>
+      <h2 class="section-title">Tudo que o homem moderno precisa</h2>
+      <p class="section-sub">Cada serviço realizado com atenção absoluta aos detalhes.</p>
+    </div>
+    <div class="servicos-grid">
+      <div class="servico-card">
+        <div class="servico-icon">✂️</div>
+        <div class="servico-nome">Corte Masculino</div>
+        <div class="servico-preco">R$55<span></span></div>
+        <a href="https://wa.me/5511999990000?text=Quero agendar um Corte Masculino" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">🪒</div>
+        <div class="servico-nome">Barba Completa</div>
+        <div class="servico-preco">R$40<span></span></div>
+        <a href="https://wa.me/5511999990000?text=Quero agendar uma Barba Completa" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">💈</div>
+        <div class="servico-nome">Combo Corte+Barba</div>
+        <div class="servico-preco">R$85<span></span></div>
+        <a href="https://wa.me/5511999990000?text=Quero agendar o Combo Corte+Barba" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">💧</div>
+        <div class="servico-nome">Hidratação Capilar</div>
+        <div class="servico-preco">R$60<span></span></div>
+        <a href="https://wa.me/5511999990000?text=Quero agendar Hidratação Capilar" class="btn-servico">Agendar</a>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">👁️</div>
+        <div class="servico-nome">Sobrancelha</div>
+        <div class="servico-preco">R$20<span></span></div>
+        <a href="https://wa.me/5511999990000?text=Quero agendar design de Sobrancelha" class="btn-servico">Agendar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="depoimentos" id="depoimentos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Depoimentos</div>
+      <h2 class="section-title">O que nossos clientes dizem</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Sou cliente da Barbearia Silva há 7 anos. Não consigo me imaginar indo em outro lugar. O nível de cuidado e atenção que recebo aqui é incomparável. O Carlos é cirúrgico na tesoura — sai exatamente o que eu peço."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">M</div>
+          <div>
+            <div class="dep-name">Marcos Oliveira</div>
+            <div class="dep-role">43 anos • Empresário</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Vim pela primeira vez num sábado de manhã sem hora marcada e me surpreendi. Em 20 minutos fui atendido, o ambiente é incrível e o resultado superou todas as expectativas. Virei cliente fixo na hora."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">R</div>
+          <div>
+            <div class="dep-name">Rafael Souza</div>
+            <div class="dep-role">28 anos • Engenheiro Civil</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Minha barba sempre foi um problema — crescia torta, ressecava fácil. O profissional aqui me ensinou uma rotina de cuidados e hoje é meu maior elogio. Barbearia de verdade é essa aqui."</div>
+        <div class="dep-author">
+          <div class="dep-avatar">D</div>
+          <div>
+            <div class="dep-name">Diego Mendes</div>
+            <div class="dep-role">35 anos • Professor universitário</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Pronto para o seu melhor <span>visual?</span></h2>
+    <p>Agende agora mesmo. Primeiros 10 agendamentos do mês ganham 10% de desconto.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5511999990000?text=Olá! Quero agendar um horário na Barbearia Silva" class="btn-primary" style="font-size:18px; padding:18px 48px;">📱 Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text" style="font-size:22px;">✂️ Barbearia Silva Premium</div>
+      <p>Referência em barbearia masculina na Zona Sul de São Paulo há 15 anos. Qualidade, estilo e respeito pelo seu tempo.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Localização</h4>
+      <p>Rua das Acácias, 847</p>
+      <p>Vila Mariana — SP</p>
+      <p>CEP 04014-001</p>
+    </div>
+    <div class="footer-col">
+      <h4>Horários</h4>
+      <p>Seg–Sex: 09h às 20h</p>
+      <p>Sábado: 09h às 18h</p>
+      <p>Domingo: 10h às 15h</p>
+      <a href="https://wa.me/5511999990000" style="color: var(--gold); margin-top:10px; font-weight:600;">📷 @barbearia.silva</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Barbearia Silva Premium — Todos os direitos reservados</div>
+</footer>
+
+<a href="https://wa.me/5511999990000?text=Olá! Vi o site e quero agendar um horário!" class="whatsapp-btn" target="_blank" title="Agendar pelo WhatsApp">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.669 4.8 1.835 6.793L2 30l7.42-1.808A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.56 11.56 0 01-5.894-1.608l-.424-.252-4.404 1.072 1.12-4.28-.277-.44A11.56 11.56 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zm6.324-8.664c-.346-.174-2.048-1.01-2.366-1.124-.317-.115-.548-.173-.778.174-.23.346-.892 1.122-1.094 1.353-.2.23-.403.26-.748.086-.346-.173-1.46-.538-2.78-1.716-1.028-.917-1.72-2.048-1.924-2.394-.2-.346-.02-.533.153-.706.156-.155.346-.404.52-.606.172-.2.23-.346.346-.577.115-.23.058-.432-.03-.606-.086-.173-.778-1.877-1.066-2.57-.28-.673-.566-.582-.778-.593-.2-.01-.432-.012-.663-.012s-.606.086-.923.433c-.317.346-1.21 1.18-1.21 2.88 0 1.7 1.237 3.34 1.41 3.572.172.23 2.434 3.716 5.896 5.21.824.356 1.468.568 1.97.727.827.263 1.58.226 2.174.137.663-.1 2.048-.838 2.337-1.648.288-.81.288-1.504.2-1.648-.086-.144-.317-.23-.663-.404z"/>
+  </svg>
+</a>
+
+</body>
+</html>
