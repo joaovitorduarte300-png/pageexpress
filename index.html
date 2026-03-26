@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
-  <!-- Google Fonts NÃO bloqueante (pesos reduzidos: apenas 400,700,800,900) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet"/></noscript>
+  <!-- Google Fonts NÃO bloqueante via media=print (técnica mais confiável) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" /></noscript>
   <style>
     /* ============================================================
        RESET & BASE
@@ -1422,16 +1422,23 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  // Smooth highlight nav on scroll
+  // Scroll nav — passive + rAF para não causar reflow
   const sections = document.querySelectorAll('section[id]');
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    const y = window.scrollY + 80;
-    sections.forEach(s => {
-      if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      }
-    });
-  });
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY + 80;
+        sections.forEach(s => {
+          if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+          }
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 </script>
 
 <!-- Meta Pixel — carrega DEPOIS do conteúdo principal (não bloqueia renderização) -->
