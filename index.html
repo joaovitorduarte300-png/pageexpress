@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
-  <!-- Google Fonts NÃO bloqueante via media=print (técnica mais confiável) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" /></noscript>
+  <!-- Google Fonts com display=optional: usa Inter se já estiver em cache, senão mantém system-ui sem nunca trocar (zero reflow) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=optional" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=optional" /></noscript>
   <style>
     /* ============================================================
        RESET & BASE
@@ -1422,17 +1422,23 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  // Scroll nav — passive + rAF para não causar reflow
-  const sections = document.querySelectorAll('section[id]');
+  // Scroll nav — posições pré-calculadas (zero reflow no scroll)
+  let sectionCache = [];
+  function cacheSections() {
+    sectionCache = Array.from(document.querySelectorAll('section[id]')).map(s => ({
+      top: s.offsetTop, bot: s.offsetTop + s.offsetHeight
+    }));
+  }
+  cacheSections();
+  window.addEventListener('resize', cacheSections, { passive: true });
+  const navLinks = document.querySelectorAll('nav a');
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
         const y = window.scrollY + 80;
-        sections.forEach(s => {
-          if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-          }
+        sectionCache.forEach(s => {
+          if (y >= s.top && y < s.bot) navLinks.forEach(a => a.classList.remove('active'));
         });
         ticking = false;
       });
