@@ -358,36 +358,111 @@
        LOGOS / SOCIAL PROOF STRIP
     ============================================================ */
     #proof-strip {
-      padding: 40px 0;
+      padding: 64px 0 72px;
       border-top: 1px solid var(--black-border);
       border-bottom: 1px solid var(--black-border);
+      background: #080808;
     }
-    .proof-label {
+    .proof-eyebrow {
       text-align: center;
-      font-size: .75rem;
+      font-size: .7rem;
       font-weight: 700;
-      letter-spacing: .12em;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      color: #444;
-      margin-bottom: 28px;
+      color: var(--orange);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .proof-eyebrow::before,
+    .proof-eyebrow::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--orange);
+      opacity: 0.4;
+    }
+    .proof-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .proof-sub {
+      text-align: center;
+      font-size: .85rem;
+      color: #555;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .proof-sub .arrow-hint {
+      color: var(--orange);
+      font-size: .8rem;
+      animation: bounce-x 1.4s ease-in-out infinite;
+    }
+    @keyframes bounce-x {
+      0%,100% { transform: translateX(0); }
+      50%      { transform: translateX(5px); }
     }
     .logos-row {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px 32px;
+      gap: 12px 14px;
     }
     .logo-pill {
-      background: var(--black-card);
-      border: 1px solid var(--black-border);
-      border-radius: 8px;
-      padding: 8px 20px;
-      font-size: .8rem;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: .82rem;
       font-weight: 700;
-      color: #555;
+      color: #888;
       letter-spacing: .04em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .25s ease;
+      cursor: pointer;
+      position: relative;
     }
+    .logo-pill::after {
+      content: '→';
+      font-size: .75rem;
+      color: var(--orange);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all .25s ease;
+    }
+    .logo-pill:hover {
+      background: #161616;
+      border-color: var(--orange);
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(255,106,0,.15);
+    }
+    .logo-pill:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .logo-pill .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: .5;
+      flex-shrink: 0;
+      transition: opacity .25s;
+    }
+    .logo-pill:hover .pill-dot { opacity: 1; }
 
     /* ============================================================
        COMO FUNCIONA (48 horas)
@@ -990,15 +1065,20 @@
 ============================================================ -->
 <div id="proof-strip">
   <div class="container">
-    <div class="proof-label">Negócios que já deram o próximo passo</div>
+    <div class="proof-eyebrow">Casos reais</div>
+    <div class="proof-title">Negócios que já saíram na frente 🚀</div>
+    <div class="proof-sub">
+      Clique em qualquer um e veja como ficou o site deles
+      <span class="arrow-hint">→</span>
+    </div>
     <div class="logos-row">
-      <a class="logo-pill" href="clientes/barbearia-silva.html" target="_blank">Barbearia Silva</a>
-      <a class="logo-pill" href="clientes/clinica-bem-estar.html" target="_blank">Clínica Bem Estar</a>
-      <a class="logo-pill" href="clientes/moda-estilo.html" target="_blank">Moda &amp; Estilo</a>
-      <a class="logo-pill" href="clientes/advocacia-lima.html" target="_blank">Advocacia Lima</a>
-      <a class="logo-pill" href="clientes/petshop-cao-feliz.html" target="_blank">Pet Shop Cão Feliz</a>
-      <a class="logo-pill" href="clientes/construtora-rt.html" target="_blank">Construtora RT</a>
-      <a class="logo-pill" href="clientes/autopecas-nova.html" target="_blank">Auto Peças Nova</a>
+      <a class="logo-pill" href="clientes/barbearia-silva.html" target="_blank"><span class="pill-dot"></span>✂️ Barbearia Silva</a>
+      <a class="logo-pill" href="clientes/clinica-bem-estar.html" target="_blank"><span class="pill-dot"></span>🏥 Clínica Bem Estar</a>
+      <a class="logo-pill" href="clientes/moda-estilo.html" target="_blank"><span class="pill-dot"></span>👗 Moda &amp; Estilo</a>
+      <a class="logo-pill" href="clientes/advocacia-lima.html" target="_blank"><span class="pill-dot"></span>⚖️ Advocacia Lima</a>
+      <a class="logo-pill" href="clientes/petshop-cao-feliz.html" target="_blank"><span class="pill-dot"></span>🐾 Pet Shop Cão Feliz</a>
+      <a class="logo-pill" href="clientes/construtora-rt.html" target="_blank"><span class="pill-dot"></span>🏗️ Construtora RT</a>
+      <a class="logo-pill" href="clientes/autopecas-nova.html" target="_blank"><span class="pill-dot"></span>🔧 Auto Peças Nova</a>
     </div>
   </div>
 </div>
