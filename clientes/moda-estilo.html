@@ -3,317 +3,518 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Moda & Estilo Boutique | Seu estilo, sua identidade</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <title>Moda &amp; Estilo — Consultoria de Imagem | Jardins, São Paulo</title>
+  <meta name="description" content="8 anos transformando a imagem de mulheres em todo o Brasil. Consultoria personalizada, curadoria de guarda-roupa e muito mais. Jardins — São Paulo."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0d0009;
-      --brand: #1a0533;
       --accent: #e91e8c;
-      --accent-light: #f055a8;
-      --white: #fdf0f8;
-      --gray: #b08ca8;
-      --card-bg: #150828;
+      --accent-light: #f06ab5;
+      --accent-dark: #b5166d;
+      --accent-rgb: 233,30,140;
+      --primary: #1a0533;
+      --bg: #000000;
+      --bg2: #060606;
+      --bg3: #0d0d0d;
+      --border: #181818;
+      --text: #f0ece4;
+      --muted: #6a6a6a;
+      --muted2: #444;
     }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    header {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-      background: rgba(13,0,9,0.93); backdrop-filter: blur(12px);
-      padding: 18px 40px; display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid rgba(233,30,140,0.18);
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 26px 56px; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s; }
+    nav.scrolled { background: rgba(0,0,0,0.97); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(233,30,140,0.1); padding: 16px 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-seal { width: 44px; height: 44px; border: 1.5px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent); flex-shrink: 0; transition: all 0.4s; }
+    .nav-name { font-size: 1rem; font-weight: 700; color: #fff; }
+    .nav-sub { font-size: 0.68rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 1px; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: var(--accent); }
+    .nav-cta { background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; padding: 11px 26px; border-radius: 5px; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; letter-spacing: 0.3px; }
+    .nav-cta:hover { background: var(--accent); color: #fff; }
+    @media(max-width:768px){
+      nav { padding: 14px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+      .nav-link { display: none; }
+      .nav-sub { display: none; }
+      .nav-name { font-size: 0.88rem; }
+      .nav-seal { width: 34px; height: 34px; font-size: 0.95rem; }
+      .nav-cta { padding: 8px 14px; font-size: 0.78rem; white-space: nowrap; }
     }
-    .logo-text { font-size: 20px; font-weight: 800; color: var(--accent); }
-    .logo-sub { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
-    nav a { color: var(--gray); text-decoration: none; margin-left: 28px; font-size: 14px; font-weight: 500; transition: color .2s; }
-    nav a:hover { color: var(--accent); }
-    .nav-cta { background: var(--accent); color: #fff !important; padding: 10px 22px; border-radius: 6px; font-weight: 700 !important; }
-    .nav-cta:hover { background: var(--accent-light) !important; }
 
-    .hero {
-      height: 100vh; min-height: 650px; position: relative;
-      display: flex; align-items: center; justify-content: center; text-align: center;
-      background: url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1400&q=80') center/cover no-repeat;
+    /* HERO */
+    .hero { min-height: 100vh; position: relative; display: flex; align-items: flex-end; padding-bottom: 90px; background: url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&q=85') center/cover no-repeat; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(0,0,0,0.96) 40%, rgba(26,5,51,0.55) 100%), linear-gradient(to top, rgba(0,0,0,0.85) 15%, transparent 55%); }
+    .hero-content { position: relative; z-index: 2; max-width: 1160px; margin: 0 auto; padding: 0 56px; width: 100%; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(233,30,140,0.3); background: rgba(233,30,140,0.05); padding: 8px 20px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
+    .hero-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.2rem, 6.5vw, 6rem); font-weight: 900; line-height: 1.03; color: #fff; margin-bottom: 26px; max-width: 740px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-desc { font-size: 1.08rem; color: rgba(255,255,255,0.6); max-width: 460px; line-height: 1.78; margin-bottom: 42px; }
+    .hero-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 60px; }
+    .btn-accent { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff; font-weight: 800; font-size: 0.92rem; padding: 17px 36px; border-radius: 5px; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 36px rgba(var(--accent-rgb),0.28); letter-spacing: 0.3px; }
+    .btn-accent:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 12px 44px rgba(var(--accent-rgb),0.42); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.75); font-weight: 600; font-size: 0.88rem; padding: 16px 28px; border-radius: 5px; text-decoration: none; transition: all 0.3s; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-divider { height: 1px; background: linear-gradient(to right, rgba(233,30,140,0.25), transparent); margin-bottom: 40px; }
+    .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; }
+    .h-stat .num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .h-stat .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 7px; font-weight: 500; letter-spacing: 0.5px; }
+    @media(max-width:768px){
+      .hero-content { padding: 0 20px; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero-stats { gap: 22px; }
+      .hero { padding-bottom: 60px; }
+      .hero-eyebrow { font-size: 0.6rem; letter-spacing: 1.5px; padding: 6px 12px; }
+      .hero-desc { font-size: 0.95rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .btn-accent, .btn-ghost { width: 100%; justify-content: center; }
     }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,5,51,0.90) 0%, rgba(13,0,9,0.78) 100%); }
-    .hero-content { position: relative; z-index: 2; max-width: 760px; padding: 20px; }
-    .hero-badge { display: inline-block; background: rgba(233,30,140,0.12); border: 1px solid var(--accent); color: var(--accent); padding: 6px 18px; border-radius: 30px; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; }
-    .hero h1 { font-size: clamp(36px, 6vw, 68px); font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
-    .hero h1 span { color: var(--accent); }
-    .hero p { font-size: 19px; color: rgba(253,240,248,0.82); margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; }
-    .btn-primary { display: inline-block; background: var(--accent); color: #fff; padding: 16px 40px; border-radius: 8px; font-weight: 800; font-size: 16px; text-decoration: none; transition: all .25s; }
-    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(233,30,140,0.45); }
-    .btn-outline { display: inline-block; border: 2px solid var(--accent); color: var(--accent); padding: 14px 36px; border-radius: 8px; font-weight: 700; font-size: 16px; text-decoration: none; margin-left: 14px; transition: all .25s; }
-    .btn-outline:hover { background: var(--accent); color: #fff; }
-    .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 56px; flex-wrap: wrap; }
-    .stat-num { font-size: 36px; font-weight: 900; color: var(--accent); }
-    .stat-label { font-size: 13px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
 
-    section { padding: 90px 20px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-tag { color: var(--accent); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-    .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
-    .section-sub { color: var(--gray); font-size: 17px; max-width: 560px; }
-    .section-header { margin-bottom: 56px; }
+    /* CRED STRIP */
+    .cred-strip { background: var(--bg2); border-top: 1px solid rgba(233,30,140,0.1); border-bottom: 1px solid rgba(233,30,140,0.1); padding: 20px 56px; display: flex; justify-content: center; align-items: center; gap: 44px; flex-wrap: wrap; }
+    .cred-item { display: flex; align-items: center; gap: 9px; font-size: 0.8rem; color: rgba(255,255,255,0.45); font-weight: 500; white-space: nowrap; }
+    .cred-item .icon { color: var(--accent); }
+    .cred-item strong { color: rgba(255,255,255,0.75); }
 
-    .diferenciais { background: var(--brand); }
-    .dif-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
-    .dif-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(233,30,140,0.15); border-radius: 14px; padding: 36px 28px; text-align: center; transition: all .3s; }
-    .dif-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .dif-icon { font-size: 44px; margin-bottom: 18px; }
-    .dif-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-    .dif-text { color: var(--gray); font-size: 14px; line-height: 1.7; }
+    /* SECTIONS */
+    section { padding: 110px 56px; }
+    .container { max-width: 1160px; margin: 0 auto; }
+    .s-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .s-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.12; color: #fff; margin-bottom: 18px; }
+    .s-sub { font-size: 0.98rem; color: var(--muted); max-width: 520px; line-height: 1.82; margin-bottom: 58px; }
+    @media(max-width:768px){ section { padding: 72px 20px; } .cred-strip { padding: 18px 20px; gap: 20px; } }
 
-    .interior-section { background: var(--bg); }
-    .interior-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .interior-img { border-radius: 16px; overflow: hidden; }
-    .interior-img img { width: 100%; height: 420px; object-fit: cover; display: block; }
-    .interior-text h2 { font-size: 36px; font-weight: 900; margin-bottom: 20px; }
-    .interior-text h2 span { color: var(--accent); }
-    .interior-text p { color: var(--gray); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
-    .interior-list { list-style: none; margin: 24px 0; }
-    .interior-list li { padding: 8px 0; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px; }
-    .interior-list li::before { content: '✦'; color: var(--accent); font-size: 12px; }
+    /* SERVICES GRID */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    @media(max-width:900px){ .services-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:560px){ .services-grid { grid-template-columns: 1fr; } }
+    .srv-card { background: var(--bg3); padding: 38px 30px; position: relative; overflow: hidden; transition: background 0.3s; }
+    .srv-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+    .srv-card:hover { background: #111; }
+    .srv-card:hover::after { transform: scaleX(1); }
+    .srv-icon { font-size: 1.8rem; margin-bottom: 18px; display: block; }
+    .srv-name { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .srv-price { font-size: 0.82rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; letter-spacing: 0.3px; }
+    .srv-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.68; }
 
-    .servicos { background: var(--brand); }
-    .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
-    .servico-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(233,30,140,0.15); border-radius: 14px; padding: 32px 24px; text-align: center; transition: all .3s; display: flex; flex-direction: column; align-items: center; }
-    .servico-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-    .servico-icon { font-size: 40px; margin-bottom: 14px; }
-    .servico-nome { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-    .servico-preco { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 18px; }
-    .btn-servico { width: 100%; background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 7px; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; display: block; transition: all .2s; }
-    .btn-servico:hover { background: var(--accent-light); }
+    /* SPLIT */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media(max-width:900px){ .split { grid-template-columns: 1fr; gap: 48px; } }
+    .split-img-wrap { position: relative; }
+    .split-img-wrap img { width: 100%; height: 540px; object-fit: cover; border-radius: 3px; display: block; filter: grayscale(15%) contrast(1.05); }
+    .split-badge { position: absolute; bottom: -20px; right: -20px; background: var(--accent); color: #fff; padding: 26px 30px; text-align: center; border-radius: 3px; box-shadow: 0 16px 48px rgba(0,0,0,0.6); }
+    .split-badge .big { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; display: block; }
+    .split-badge .sml { font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 5px; display: block; }
+    .checklist { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 14px; }
+    .checklist li { display: flex; align-items: flex-start; gap: 13px; font-size: 0.93rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .check-icon { color: var(--accent); font-size: 0.85rem; margin-top: 2px; flex-shrink: 0; }
 
-    .depoimentos { background: var(--bg); }
-    .dep-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
-    .dep-card { background: var(--card-bg); border: 1px solid rgba(233,30,140,0.12); border-radius: 14px; padding: 32px 28px; }
-    .dep-stars { color: var(--accent); font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
-    .dep-text { color: rgba(253,240,248,0.85); font-size: 15px; line-height: 1.75; margin-bottom: 22px; font-style: italic; }
-    .dep-author { display: flex; align-items: center; gap: 14px; }
-    .dep-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 18px; }
-    .dep-name { font-weight: 700; font-size: 15px; }
-    .dep-role { font-size: 12px; color: var(--gray); }
+    /* PROCESSO */
+    .proc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+    @media(max-width:900px){ .proc-grid { grid-template-columns: repeat(2,1fr); gap: 32px; } }
+    @media(max-width:480px){ .proc-grid { grid-template-columns: 1fr; gap: 32px; } }
+    .proc-step { padding: 0 28px 0; text-align: center; position: relative; }
+    .proc-step:not(:last-child)::after { content: ''; position: absolute; top: 27px; left: calc(50% + 28px); width: calc(100% - 56px); height: 1px; background: linear-gradient(to right, rgba(233,30,140,0.2), rgba(233,30,140,0.05)); }
+    @media(max-width:900px){ .proc-step::after { display: none; } }
+    .proc-num { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid rgba(233,30,140,0.35); color: var(--accent); font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; background: var(--bg); position: relative; z-index: 1; transition: all 0.3s; }
+    .proc-step:hover .proc-num { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .proc-title { font-weight: 800; font-size: 0.9rem; color: #fff; margin-bottom: 10px; }
+    .proc-desc { font-size: 0.81rem; color: var(--muted); line-height: 1.68; }
 
-    .cta-final { background: linear-gradient(135deg, var(--brand), #0a001a); text-align: center; border-top: 1px solid rgba(233,30,140,0.2); }
-    .cta-final h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; margin-bottom: 16px; }
-    .cta-final h2 span { color: var(--accent); }
-    .cta-final p { color: var(--gray); font-size: 18px; margin-bottom: 40px; }
+    /* DEPOIMENTOS */
+    .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    @media(max-width:900px){ .test-grid { grid-template-columns: 1fr; } }
+    .test-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 36px 30px; position: relative; overflow: hidden; transition: border-color 0.3s; }
+    .test-card:hover { border-color: rgba(233,30,140,0.2); }
+    .test-q { position: absolute; top: 16px; right: 22px; font-family: 'Playfair Display', serif; font-size: 7rem; color: var(--accent); opacity: 0.07; line-height: 1; pointer-events: none; }
+    .test-stars { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 18px; }
+    .test-txt { font-size: 0.93rem; line-height: 1.8; color: rgba(255,255,255,0.65); margin-bottom: 26px; font-style: italic; }
+    .test-auth { display: flex; align-items: center; gap: 13px; }
+    .test-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-dark), var(--accent-light)); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.95rem; color: #fff; flex-shrink: 0; }
+    .test-nm { font-weight: 700; font-size: 0.9rem; color: #fff; }
+    .test-rl { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+    .test-area-tag { font-size: 0.68rem; color: var(--accent); font-weight: 700; letter-spacing: 0.5px; margin-top: 4px; }
 
-    footer { background: #080008; border-top: 1px solid rgba(233,30,140,0.1); padding: 48px 20px 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; }
-    .footer-brand p { color: var(--gray); font-size: 14px; line-height: 1.8; margin-top: 12px; max-width: 280px; }
-    .footer-col h4 { color: var(--accent); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
-    .footer-col p, .footer-col a { color: var(--gray); font-size: 14px; line-height: 1.9; text-decoration: none; display: block; }
-    .footer-col a:hover { color: var(--accent); }
-    .footer-bottom { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--gray); font-size: 13px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    /* CTA */
+    .cta-wrap { background: var(--bg2); border-top: 1px solid rgba(233,30,140,0.08); border-bottom: 1px solid rgba(233,30,140,0.08); padding: 110px 56px; text-align: center; }
+    .cta-inner { max-width: 660px; margin: 0 auto; }
+    .cta-disclaimer { font-size: 0.76rem; color: var(--muted2); margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    @media(max-width:768px){ .cta-wrap { padding: 72px 20px; } }
 
-    .whatsapp-btn { position: fixed; bottom: 28px; right: 28px; z-index: 999; background: #25d366; color: white; width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.5); transition: all .3s; animation: pulse 2s infinite; }
-    .whatsapp-btn:hover { transform: scale(1.12); }
-    @keyframes pulse { 0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); } 50% { box-shadow: 0 6px 36px rgba(37,211,102,0.8); } }
+    /* FOOTER */
+    footer { background: #000; border-top: 1px solid #0a0a0a; padding: 64px 56px 40px; }
+    .footer-grid { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 56px; }
+    @media(max-width:900px){ .footer-grid { grid-template-columns: 1fr; gap: 36px; } }
+    .f-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; }
+    .f-name span { color: var(--accent); }
+    .f-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.75; max-width: 280px; margin-bottom: 18px; }
+    .f-social { font-size: 0.78rem; color: rgba(233,30,140,0.6); font-weight: 600; }
+    .f-col-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .f-col ul li { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+    .footer-bot { max-width: 1160px; margin: 44px auto 0; padding-top: 24px; border-top: 1px solid #0a0a0a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bot span { font-size: 0.76rem; color: var(--muted2); }
+    @media(max-width:768px){ footer { padding: 48px 20px 36px; } .footer-bot { flex-direction: column; text-align: center; } }
 
-    @media(max-width:900px) {
-      header { padding: 16px 20px; } nav { display: none; }
-      .dif-grid, .dep-grid, .interior-grid, .footer-grid { grid-template-columns: 1fr; }
-    }
-    @media(max-width:600px) { .servicos-grid { grid-template-columns: 1fr 1fr; } .btn-outline { margin-left:0; margin-top:12px; } }
+    /* WA FLOAT */
+    .wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(37,211,102,0.38); text-decoration: none; transition: transform 0.2s; animation: wa-p 3s infinite; }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+    @keyframes wa-p { 0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.38)}50%{box-shadow:0 4px 40px rgba(37,211,102,0.65)} }
+
+    /* MODAL */
+    .form-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.96); backdrop-filter: blur(16px); display: none; align-items: center; justify-content: center; padding: 16px; }
+    .form-overlay.open { display: flex; }
+    .form-box { background: #080808; border: 1px solid rgba(233,30,140,0.18); border-radius: 8px; width: 100%; max-width: 520px; padding: 40px 36px; }
+    .form-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .form-brand { display: flex; align-items: center; gap: 10px; }
+    .form-brand-seal { width: 32px; height: 32px; border: 1px solid rgba(233,30,140,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--accent); }
+    .form-brand-name { font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .form-close { width: 34px; height: 34px; border-radius: 50%; background: #111; border: 1px solid #1e1e1e; color: var(--muted); cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .form-close:hover { border-color: var(--accent); color: var(--accent); }
+    .form-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+    .form-sub { font-size: 0.87rem; color: var(--muted); margin-bottom: 28px; line-height: 1.7; }
+    .f-group { margin-bottom: 18px; }
+    .f-label { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: 0.8px; margin-bottom: 8px; display: block; text-transform: uppercase; }
+    .f-input { width: 100%; background: #0c0c0c; border: 1px solid #1e1e1e; color: #fff; font-size: 0.93rem; padding: 13px 16px; border-radius: 6px; transition: border-color 0.2s; font-family: 'Inter', sans-serif; outline: none; appearance: none; }
+    .f-input:focus { border-color: rgba(233,30,140,0.4); }
+    .f-input::placeholder { color: #333; }
+    select.f-input { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    select.f-input option { background: #111; color: #fff; }
+    .btn-submit { width: 100%; background: var(--accent); color: #fff; font-weight: 800; font-size: 0.93rem; padding: 17px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.3s; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; margin-top: 8px; box-shadow: 0 8px 28px rgba(233,30,140,0.25); }
+    .btn-submit:hover { background: var(--accent-light); box-shadow: 0 12px 36px rgba(233,30,140,0.38); }
+
+    /* FADE */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <div class="logo-text">👗 Moda & Estilo</div>
-    <div class="logo-sub">Boutique & Consultoria</div>
+<nav id="mainNav">
+  <a class="nav-brand" href="#">
+    <div class="nav-seal">M</div>
+    <div><div class="nav-name">Moda &amp; Estilo</div><div class="nav-sub">Consultoria de Imagem</div></div>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="#servicos">Serviços</a>
+    <a class="nav-link" href="#sobre">Sobre</a>
+    <a class="nav-link" href="#depoimentos">Depoimentos</a>
+    <a class="nav-cta" href="#" onclick="openForm();return false;">Agendar Consulta</a>
   </div>
-  <nav>
-    <a href="#servicos">Serviços</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#depoimentos">Depoimentos</a>
-    <a href="https://wa.me/5511999990000" class="nav-cta">Falar com consultora</a>
-  </nav>
-</header>
+</nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">✨ Consultoria de Moda em São Paulo</div>
-    <h1>Seu estilo, sua <span>identidade.</span><br/>Nós te ajudamos a encontrar.</h1>
-    <p>Mais de 500 mulheres transformadas. Consultoria presencial e online com profissional certificada e olhar único para cada cliente.</p>
-    <div>
-      <a href="https://wa.me/5511999990000" class="btn-primary">💬 Falar com a consultora</a>
-      <a href="#servicos" class="btn-outline">Nossos serviços</a>
+    <div class="hero-eyebrow"><span class="hero-dot"></span> ✨ Jardins — São Paulo · Presencial &amp; Online</div>
+    <h1>Seu estilo é<br/>a sua primeira<br/><em>impressão.</em></h1>
+    <p class="hero-desc">8 anos transformando a imagem de mulheres em todo o Brasil. Consultoria personalizada, curadoria de guarda-roupa e muito mais.</p>
+    <div class="hero-actions">
+      <a class="btn-accent" href="#" onclick="openForm();return false;">Agendar Minha Consultoria →</a>
+      <a class="btn-ghost" href="#servicos">Conhecer os Serviços</a>
     </div>
+    <div class="hero-divider"></div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Clientes transformadas</div></div>
-      <div class="stat"><div class="stat-num">8 anos</div><div class="stat-label">De experiência</div></div>
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Personalizadas</div></div>
+      <div class="h-stat"><div class="num">8</div><div class="lbl">Anos de experiência</div></div>
+      <div class="h-stat"><div class="num">500+</div><div class="lbl">Clientes transformadas</div></div>
+      <div class="h-stat"><div class="num">4.9★</div><div class="lbl">Avaliação Google</div></div>
+      <div class="h-stat"><div class="num">Online</div><div class="lbl">&amp; Presencial</div></div>
     </div>
   </div>
 </section>
 
-<section class="diferenciais" id="sobre">
+<!-- CRED STRIP -->
+<div class="cred-strip">
+  <div class="cred-item"><span class="icon">✨</span> <strong>Consultora Certificada</strong></div>
+  <div class="cred-item"><span class="icon">🌎</span> Atende todo o Brasil</div>
+  <div class="cred-item"><span class="icon">💻</span> Sessões Online</div>
+  <div class="cred-item"><span class="icon">👗</span> 500+ Transformações</div>
+  <div class="cred-item"><span class="icon">🎯</span> Método Exclusivo</div>
+</div>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Nosso diferencial</div>
-      <h2 class="section-title">Moda que liberta, não que aprisiona</h2>
-    </div>
-    <div class="dif-grid">
-      <div class="dif-card">
-        <div class="dif-icon">🎓</div>
-        <div class="dif-title">Consultora Certificada</div>
-        <div class="dif-text">Formação internacional em consultoria de imagem e coloração pessoal. Cada análise é feita com método científico e sensibilidade artística.</div>
+    <p class="s-label">O que oferecemos</p>
+    <h2 class="s-title">Serviços feitos<br/>para a sua realidade</h2>
+    <p class="s-sub">Cada mulher é única. Cada consultoria é personalizada para o seu biotipo, coloração, rotina e orçamento.</p>
+    <div class="services-grid fade-up">
+      <div class="srv-card">
+        <span class="srv-icon">🔍</span>
+        <div class="srv-name">Diagnóstico de Estilo</div>
+        <div class="srv-price">R$ 350</div>
+        <div class="srv-desc">Análise completa da sua coloração pessoal, biotipo e personalidade para definir seu estilo único.</div>
       </div>
-      <div class="dif-card">
-        <div class="dif-icon">💻</div>
-        <div class="dif-title">Presencial e Online</div>
-        <div class="dif-text">Atendemos em nosso espaço no Itaim Bibi e também por videochamada para clientes de qualquer parte do Brasil.</div>
+      <div class="srv-card">
+        <span class="srv-icon">🛍️</span>
+        <div class="srv-name">Personal Shopping</div>
+        <div class="srv-price">R$ 280</div>
+        <div class="srv-desc">Vamos às compras juntas. Seleção peça a peça para o seu orçamento e estilo de vida.</div>
       </div>
-      <div class="dif-card">
-        <div class="dif-icon">💎</div>
-        <div class="dif-title">Resultado Garantido</div>
-        <div class="dif-text">Não entregamos tendência, entregamos identidade. Você sai sabendo exatamente o que veste, por que veste e como combinar.</div>
+      <div class="srv-card">
+        <span class="srv-icon">👗</span>
+        <div class="srv-name">Curadoria de Guarda-Roupa</div>
+        <div class="srv-price">R$ 500</div>
+        <div class="srv-desc">Auditoria completa do armário: o que fica, o que vai e o que precisa entrar.</div>
+      </div>
+      <div class="srv-card">
+        <span class="srv-icon">🖥️</span>
+        <div class="srv-name">Consultoria Online</div>
+        <div class="srv-price">R$ 200</div>
+        <div class="srv-desc">Diagnóstico e planejamento 100% digital. Para clientes em qualquer cidade do Brasil.</div>
+      </div>
+      <div class="srv-card">
+        <span class="srv-icon">💄</span>
+        <div class="srv-name">Imagem para Eventos</div>
+        <div class="srv-price">R$ 300</div>
+        <div class="srv-desc">Look completo para casamentos, formaturas, entrevistas de emprego e eventos corporativos.</div>
+      </div>
+      <div class="srv-card">
+        <span class="srv-icon">📸</span>
+        <div class="srv-name">Transformação Completa</div>
+        <div class="srv-price">R$ 800</div>
+        <div class="srv-desc">Pacote: diagnóstico + curadoria + personal shopping + 30 dias de suporte via WhatsApp.</div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="interior-section">
+<!-- SPLIT SOBRE -->
+<section id="sobre" style="background:#050505; padding:110px 56px;">
   <div class="container">
-    <div class="interior-grid">
-      <div class="interior-img">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Consultoria de Moda & Estilo"/>
+    <div class="split">
+      <div class="split-img-wrap fade-up">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85" alt="Camila Esteves — Consultora de Imagem"/>
+        <div class="split-badge"><span class="big">500+</span><span class="sml">Transformações</span></div>
       </div>
-      <div class="interior-text">
-        <h2>Uma nova versão <span>de você</span><br/>começa aqui</h2>
-        <p>Você já parou no closet lotado sentindo que não tem nada para usar? Isso é mais comum do que parece — e tem solução. A consultoria de imagem não é luxo, é investimento em autoconhecimento.</p>
-        <p>Com nosso método, você aprende a usar o que já tem, investe com inteligência no que falta e para de perder tempo e dinheiro com compras erradas.</p>
-        <ul class="interior-list">
-          <li>Análise de coloração pessoal e biotipo</li>
-          <li>Curadoria personalizada do guarda-roupa atual</li>
-          <li>Lista de compras estratégica sem desperdício</li>
-          <li>Montagem de looks completos e versáteis</li>
+      <div class="fade-up">
+        <p class="s-label">Nossa história</p>
+        <h2 class="s-title" style="font-size:2.5rem;">Cada mulher tem um<br/>estilo genuinamente seu.</h2>
+        <p style="color:rgba(255,255,255,0.58);line-height:1.82;margin-bottom:16px;font-size:0.95rem;">Às vezes só precisa de alguém para ajudá-la a encontrar. Camila Esteves formou-se em moda em 2016 e especializou-se em consultoria de imagem em Milão.</p>
+        <p style="color:rgba(255,255,255,0.58);line-height:1.82;margin-bottom:28px;font-size:0.95rem;">Hoje transforma a autoestima de centenas de mulheres por ano — do diagnóstico de coloração ao personal shopping completo.</p>
+        <ul class="checklist">
+          <li><span class="check-icon">◆</span> Especialização internacional em consultoria de imagem — Milão</li>
+          <li><span class="check-icon">◆</span> Método exclusivo com mais de 500 transformações comprovadas</li>
+          <li><span class="check-icon">◆</span> Atendimento presencial em Jardins, SP ou online para todo o Brasil</li>
+          <li><span class="check-icon">◆</span> Suporte pós-consultoria via WhatsApp por 30 dias</li>
+          <li><span class="check-icon">◆</span> Abordagem personalizada para cada biotipo, rotina e objetivo</li>
         </ul>
-        <a href="https://wa.me/5511999990000" class="btn-primary" style="margin-top:8px;">Quero me transformar</a>
+        <a class="btn-accent" href="#" onclick="openForm();return false;" style="display:inline-flex;">Agendar Minha Consulta →</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="servicos" id="servicos">
+<!-- PROCESSO -->
+<section>
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Serviços</div>
-      <h2 class="section-title">Do guarda-roupa ao tapete vermelho</h2>
-      <p class="section-sub">Cada serviço 100% personalizado para o seu estilo de vida.</p>
-    </div>
-    <div class="servicos-grid">
-      <div class="servico-card">
-        <div class="servico-icon">🪞</div>
-        <div class="servico-nome">Consultoria de Imagem</div>
-        <div class="servico-preco">R$350</div>
-        <a href="https://wa.me/5511999990000?text=Quero saber mais sobre Consultoria de Imagem" class="btn-servico">Agendar</a>
+    <p class="s-label" style="text-align:center">Como funciona</p>
+    <h2 class="s-title" style="text-align:center;margin-bottom:64px;">Do primeiro contato ao<br/>look que representa você</h2>
+    <div class="proc-grid">
+      <div class="proc-step fade-up">
+        <div class="proc-num">1</div>
+        <div class="proc-title">Diagnóstico Inicial</div>
+        <div class="proc-desc">Conhecemos seu estilo, rotina e objetivos para entender o que você realmente precisa.</div>
       </div>
-      <div class="servico-card">
-        <div class="servico-icon">🛍️</div>
-        <div class="servico-nome">Personal Shopping</div>
-        <div class="servico-preco">R$280</div>
-        <a href="https://wa.me/5511999990000?text=Quero fazer Personal Shopping" class="btn-servico">Agendar</a>
+      <div class="proc-step fade-up">
+        <div class="proc-num">2</div>
+        <div class="proc-title">Análise de Coloração</div>
+        <div class="proc-desc">Definimos a paleta que favorece você — tons de pele, cabelo e a harmonia de cores ideal.</div>
       </div>
-      <div class="servico-card">
-        <div class="servico-icon">👔</div>
-        <div class="servico-nome">Montagem de Looks</div>
-        <div class="servico-preco">R$150</div>
-        <a href="https://wa.me/5511999990000?text=Quero Montagem de Looks" class="btn-servico">Agendar</a>
+      <div class="proc-step fade-up">
+        <div class="proc-num">3</div>
+        <div class="proc-title">Curadoria &amp; Compras</div>
+        <div class="proc-desc">Selecionamos as peças certas para o seu guarda-roupa com base na sua realidade e orçamento.</div>
       </div>
-      <div class="servico-card">
-        <div class="servico-icon">👚</div>
-        <div class="servico-nome">Curadoria Guarda-Roupa</div>
-        <div class="servico-preco">R$500</div>
-        <a href="https://wa.me/5511999990000?text=Quero Curadoria do Guarda-Roupa" class="btn-servico">Agendar</a>
-      </div>
-      <div class="servico-card">
-        <div class="servico-icon">💄</div>
-        <div class="servico-nome">Maquiagem p/ Evento</div>
-        <div class="servico-preco">R$200</div>
-        <a href="https://wa.me/5511999990000?text=Quero Maquiagem para Evento" class="btn-servico">Agendar</a>
+      <div class="proc-step fade-up">
+        <div class="proc-num">4</div>
+        <div class="proc-title">Look Final</div>
+        <div class="proc-desc">Você sai sabendo se vestir com confiança — combinações, ocasiões e estilo que é seu.</div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="depoimentos" id="depoimentos">
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" style="background:#050505;padding:110px 56px;">
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Depoimentos</div>
-      <h2 class="section-title">Transformações reais, palavras verdadeiras</h2>
-    </div>
-    <div class="dep-grid">
-      <div class="dep-card">
-        <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"A consultoria mudou minha relação com a roupa completamente. Eu tinha medo de ser julgada pelas minhas escolhas. A Camila me ensinou que estilo é expressão, não julgamento. Hoje me visto com confiança todos os dias."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">F</div>
-          <div><div class="dep-name">Fernanda Costa</div><div class="dep-role">34 anos • Executiva de marketing</div></div>
+    <p class="s-label">Depoimentos</p>
+    <h2 class="s-title">O que nossas clientes<br/>dizem sobre a transformação</h2>
+    <div class="test-grid" style="margin-top:48px;">
+      <div class="test-card fade-up">
+        <div class="test-q">"</div>
+        <div class="test-stars">★★★★★</div>
+        <p class="test-txt">"Entrei na consultoria achando que não tinha estilo. Saí com um guarda-roupa que funciona e uma autoestima que nunca tive. A Camila mudou minha relação com a moda completamente."</p>
+        <div class="test-auth">
+          <div class="test-av">FC</div>
+          <div>
+            <div class="test-nm">Fernanda Costa</div>
+            <div class="test-rl">Executiva, 34 anos</div>
+            <div class="test-area-tag">Diagnóstico de Estilo</div>
+          </div>
         </div>
       </div>
-      <div class="dep-card">
-        <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"Como influenciadora, minha imagem é meu trabalho. Precisava de um olhar técnico para sistematizar meu estilo. A curadoria do guarda-roupa foi reveladora — descartei 60% do que tinha e me sinto mais estilosa do que nunca."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">J</div>
-          <div><div class="dep-name">Juliana Alves</div><div class="dep-role">29 anos • Criadora de conteúdo</div></div>
+      <div class="test-card fade-up">
+        <div class="test-q">"</div>
+        <div class="test-stars">★★★★★</div>
+        <p class="test-txt">"Meu feed mudou depois da consultoria. As pessoas me perguntam todo dia como me visto tão bem — e a resposta é sempre: Camila Esteves."</p>
+        <div class="test-auth">
+          <div class="test-av">JA</div>
+          <div>
+            <div class="test-nm">Juliana Alves</div>
+            <div class="test-rl">Criadora de conteúdo, 29 anos</div>
+            <div class="test-area-tag">Personal Shopping</div>
+          </div>
         </div>
       </div>
-      <div class="dep-card">
-        <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"Médica não tem tempo para pensar em roupa — achava eu. Mas a Camila montou um guarda-roupa funcional e elegante que respeita minha rotina corrida. Agora me arrumo em 10 minutos e sempre recebo elogios no trabalho."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">P</div>
-          <div><div class="dep-name">Patrícia Ramos</div><div class="dep-role">45 anos • Médica cardiologista</div></div>
+      <div class="test-card fade-up">
+        <div class="test-q">"</div>
+        <div class="test-stars">★★★★★</div>
+        <p class="test-txt">"Precisava renovar minha imagem profissional sem perder minha identidade. A consultoria foi cirúrgica — exatamente o que precisava, sem exageros."</p>
+        <div class="test-auth">
+          <div class="test-av">PR</div>
+          <div>
+            <div class="test-nm">Patrícia Ramos</div>
+            <div class="test-rl">Médica, 45 anos</div>
+            <div class="test-area-tag">Transformação Completa</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-final">
-  <div class="container">
-    <h2>Pronta para se <span>descobrir?</span></h2>
-    <p>Vagas limitadas por mês para garantir atendimento 100% personalizado. Reserve a sua agora.</p>
-    <a href="https://wa.me/5511999990000?text=Olá! Quero agendar uma consultoria de imagem" class="btn-primary" style="font-size:18px; padding:18px 48px;">💬 Agendar minha consultoria</a>
+<!-- CTA FINAL -->
+<div class="cta-wrap">
+  <div class="cta-inner">
+    <p class="s-label">Transformação real</p>
+    <h2 class="s-title" style="max-width:560px;margin:0 auto 18px;">Pronta para ser a melhor<br/>versão de si mesma?</h2>
+    <p class="s-sub" style="max-width:460px;margin:0 auto 40px;">Agende sua consultoria agora e dê o primeiro passo para uma imagem que representa quem você realmente é.</p>
+    <a class="btn-accent" href="#" onclick="openForm();return false;" style="display:inline-flex;font-size:0.98rem;padding:18px 46px;">Agendar Minha Consultoria →</a>
+    <p class="cta-disclaimer">✨ Atendimento personalizado &nbsp;·&nbsp; Presencial &amp; Online &nbsp;·&nbsp; Método exclusivo</p>
   </div>
-</section>
+</div>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo-text" style="font-size:22px;">👗 Moda & Estilo Boutique</div>
-      <p>Consultoria de imagem e personal shopping em São Paulo. Mais de 500 mulheres transformadas com método e personalidade.</p>
+    <div>
+      <div class="f-name"><span>M</span>oda &amp; Estilo</div>
+      <p class="f-desc">Consultoria de imagem em São Paulo. 8 anos transformando mulheres com estilo, autoestima e método exclusivo.</p>
+      <div class="f-social">@modaeestilo.sp</div>
     </div>
-    <div class="footer-col">
-      <h4>Localização</h4>
-      <p>Rua Jerônimo da Veiga, 384</p>
-      <p>Itaim Bibi — SP</p>
-      <p>CEP 04536-001</p>
+    <div class="f-col">
+      <div class="f-col-title">Serviços</div>
+      <ul>
+        <li>Diagnóstico de Estilo</li>
+        <li>Personal Shopping</li>
+        <li>Curadoria de Guarda-Roupa</li>
+        <li>Consultoria Online</li>
+        <li>Imagem para Eventos</li>
+        <li>Transformação Completa</li>
+      </ul>
     </div>
-    <div class="footer-col">
-      <h4>Atendimento</h4>
-      <p>Seg–Sex: 10h às 19h</p>
-      <p>Sábado: 10h às 16h</p>
-      <a href="https://wa.me/5511999990000" style="color: var(--accent); margin-top:10px; font-weight:600;">📷 @modaestilo.boutique</a>
+    <div class="f-col">
+      <div class="f-col-title">Contato</div>
+      <ul>
+        <li>Rua Oscar Freire, 1200 sala 82</li>
+        <li>Jardins — São Paulo / SP</li>
+        <li>(11) 99000-0003</li>
+        <li>Seg–Sex: 9h–18h</li>
+        <li>@modaeestilo.sp</li>
+      </ul>
     </div>
   </div>
-  <div class="footer-bottom">© 2025 Moda & Estilo Boutique — Todos os direitos reservados</div>
+  <div class="footer-bot">
+    <span>© 2025 Moda &amp; Estilo — Consultoria de Imagem. Todos os direitos reservados.</span>
+    <span>Jardins, São Paulo — Presencial &amp; Online para todo o Brasil</span>
+  </div>
 </footer>
 
-<a href="https://wa.me/5511999990000?text=Olá! Vi o site e quero saber mais sobre a consultoria!" class="whatsapp-btn" target="_blank">
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.669 4.8 1.835 6.793L2 30l7.42-1.808A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.56 11.56 0 01-5.894-1.608l-.424-.252-4.404 1.072 1.12-4.28-.277-.44A11.56 11.56 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zm6.324-8.664c-.346-.174-2.048-1.01-2.366-1.124-.317-.115-.548-.173-.778.174-.23.346-.892 1.122-1.094 1.353-.2.23-.403.26-.748.086-.346-.173-1.46-.538-2.78-1.716-1.028-.917-1.72-2.048-1.924-2.394-.2-.346-.02-.533.153-.706.156-.155.346-.404.52-.606.172-.2.23-.346.346-.577.115-.23.058-.432-.03-.606-.086-.173-.778-1.877-1.066-2.57-.28-.673-.566-.582-.778-.593-.2-.01-.432-.012-.663-.012s-.606.086-.923.433c-.317.346-1.21 1.18-1.21 2.88 0 1.7 1.237 3.34 1.41 3.572.172.23 2.434 3.716 5.896 5.21.824.356 1.468.568 1.97.727.827.263 1.58.226 2.174.137.663-.1 2.048-.838 2.337-1.648.288-.81.288-1.504.2-1.648-.086-.144-.317-.23-.663-.404z"/>
-  </svg>
+<!-- WA FLOAT -->
+<a class="wa-float" href="https://wa.me/5511999990000" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.424h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- MODAL DE AGENDAMENTO -->
+<div class="form-overlay" id="formOverlay">
+  <div class="form-box">
+    <div class="form-header-top">
+      <div class="form-brand">
+        <div class="form-brand-seal">M</div>
+        <span class="form-brand-name">Moda &amp; Estilo — Agendamento</span>
+      </div>
+      <button class="form-close" onclick="closeForm()">✕</button>
+    </div>
+    <h2 class="form-title">Agende sua<br/>consultoria</h2>
+    <p class="form-sub">Preencha os campos abaixo e fale diretamente com a Camila pelo WhatsApp.</p>
+    <div class="f-group">
+      <label class="f-label">Seu nome *</label>
+      <input type="text" class="f-input" id="f-nome" placeholder="Ex: Ana Paula Ferreira"/>
+    </div>
+    <div class="f-group">
+      <label class="f-label">WhatsApp com DDD *</label>
+      <input type="tel" class="f-input" id="f-wa" placeholder="(11) 99999-9999"/>
+    </div>
+    <div class="f-group">
+      <label class="f-label">Serviço de interesse *</label>
+      <select class="f-input" id="f-servico">
+        <option value="">Selecione um serviço</option>
+        <option value="Diagnóstico de Estilo (R$350)">Diagnóstico de Estilo — R$ 350</option>
+        <option value="Personal Shopping (R$280)">Personal Shopping — R$ 280</option>
+        <option value="Curadoria de Guarda-Roupa (R$500)">Curadoria de Guarda-Roupa — R$ 500</option>
+        <option value="Consultoria Online (R$200)">Consultoria Online — R$ 200</option>
+        <option value="Imagem para Eventos (R$300)">Imagem para Eventos — R$ 300</option>
+        <option value="Transformação Completa (R$800)">Transformação Completa — R$ 800</option>
+      </select>
+    </div>
+    <button class="btn-submit" onclick="submitForm()">💬 Falar no WhatsApp →</button>
+  </div>
+</div>
+
+<script>
+  // NAV scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+  // FADE UP com IntersectionObserver
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // MODAL
+  function openForm() {
+    document.getElementById('formOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeForm() {
+    document.getElementById('formOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('formOverlay').addEventListener('click', e => {
+    if(e.target.id === 'formOverlay') closeForm();
+  });
+
+  function submitForm() {
+    const nome = document.getElementById('f-nome').value.trim();
+    const wa = document.getElementById('f-wa').value.trim();
+    const servico = document.getElementById('f-servico').value;
+    if(!nome){ alert('Por favor, informe seu nome.'); return; }
+    if(!wa){ alert('Por favor, informe seu WhatsApp.'); return; }
+    if(!servico){ alert('Por favor, selecione um serviço.'); return; }
+    const msg = encodeURIComponent('Olá, Camila! Meu nome é ' + nome + ' e tenho interesse em: ' + servico + '. Gostaria de agendar minha consultoria. Meu WhatsApp: ' + wa);
+    window.open('https://wa.me/5511999990000?text=' + msg, '_blank');
+    closeForm();
+  }
+</script>
 </body>
 </html>
